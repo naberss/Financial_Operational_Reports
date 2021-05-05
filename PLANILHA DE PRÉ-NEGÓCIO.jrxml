@@ -1,0 +1,1981 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PLANILHA DE PRÉ-NEGÓCIO" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="cb907941-8dc8-4cf2-8c4a-9ede13eb15ae">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bases jasper\.xml"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="XNOME_RELATORIO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["SOLICITAÇÃO DE NUMERÁRIO - MOD11"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="XPARAMETROS" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="XVERSAO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="XFIL_COD" class="java.lang.Long"/>
+	<parameter name="XPRI_COD" class="java.lang.Long"/>
+	<parameter name="XPRI_ESP_REFCLIENTE" class="java.lang.String"/>
+	<parameter name="XCDI_COD" class="java.lang.String"/>
+	<parameter name="VERSAO_RELATORIO" class="java.lang.String"/>
+	<parameter name="XCCO_COD" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[0L]]></defaultValueExpression>
+	</parameter>
+	<parameter name="XUSN_COD" class="java.lang.Long"/>
+	<parameter name="XREPORT_DATA" class="java.util.Map" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new java.util.HashMap()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="XNEG_COD" class="java.lang.Long"/>
+	<parameter name="XNDA_VLD_STATUS" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[1L]]></defaultValueExpression>
+	</parameter>
+	<parameter name="XNDA_COD" class="java.lang.Long"/>
+	<parameter name="COFINS" class="java.lang.Long"/>
+	<queryString language="plsql">
+		<![CDATA[]]>
+	</queryString>
+	<field name="FIL_COD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="FIL_COD"/>
+	</field>
+	<field name="PRI_COD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PRI_COD"/>
+	</field>
+	<field name="NEG_COD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="NEG_COD"/>
+	</field>
+	<field name="NDA_COD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="NDA_COD"/>
+	</field>
+	<field name="PES_COD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PES_COD"/>
+	</field>
+	<field name="CLIENTE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CLIENTE"/>
+	</field>
+	<field name="ORIGEM" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ORIGEM"/>
+	</field>
+	<field name="DESTINO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DESTINO"/>
+	</field>
+	<field name="VIA_TRANSPORTE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="VIA_TRANSPORTE"/>
+	</field>
+	<field name="TAXA_FISCAL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TAXA_FISCAL"/>
+	</field>
+	<field name="MOEDA_SIGLA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MOEDA_SIGLA"/>
+	</field>
+	<field name="MOEDA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MOEDA"/>
+	</field>
+	<field name="NDA_DTA_TX_FOB" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="NDA_DTA_TX_FOB"/>
+	</field>
+	<field name="TAXA_PTAX" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TAXA_PTAX"/>
+	</field>
+	<field name="PRI_VLD_TIPO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PRI_VLD_TIPO"/>
+	</field>
+	<field name="TIPO_OPERACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TIPO_OPERACAO"/>
+	</field>
+	<field name="REFERENCIA_CLIENTE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="REFERENCIA_CLIENTE"/>
+	</field>
+	<field name="REFERENCIA_EXT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="REFERENCIA_EXT"/>
+	</field>
+	<field name="CONHEC_TRANSPORTE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CONHEC_TRANSPORTE"/>
+	</field>
+	<field name="INVOICE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="INVOICE"/>
+	</field>
+	<field name="NCM" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NCM"/>
+	</field>
+	<field name="UTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UTO"/>
+	</field>
+	<field name="FOB" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="FOB"/>
+	</field>
+	<field name="FOB_MOE_NEG" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="FOB_MOE_NEG"/>
+	</field>
+	<field name="FRETE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="FRETE"/>
+	</field>
+	<field name="SEGURO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="SEGURO"/>
+	</field>
+	<field name="THC" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="THC"/>
+	</field>
+	<field name="THC_MOE_NEG" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="THC_MOE_NEG"/>
+	</field>
+	<field name="PESO_LIQ" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PESO_LIQ"/>
+	</field>
+	<field name="PESO_BRUTO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PESO_BRUTO"/>
+	</field>
+	<field name="DI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DI"/>
+	</field>
+	<field name="INCOTERM" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="INCOTERM"/>
+	</field>
+	<field name="EXPORTADOR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="EXPORTADOR"/>
+	</field>
+	<field name="VLD_CUSTO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="VLD_CUSTO"/>
+	</field>
+	<field name="TRIBUTACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TRIBUTACAO"/>
+	</field>
+	<field name="FINALIDADE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="FINALIDADE"/>
+	</field>
+	<field name="OPERACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OPERACAO"/>
+	</field>
+	<field name="ESTADO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ESTADO"/>
+	</field>
+	<field name="NUM_ITENS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="NUM_ITENS"/>
+	</field>
+	<field name="CF_TX_UTI_SISCOMEX" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CF_TX_UTI_SISCOMEX"/>
+	</field>
+	<field name="RET" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="RET"/>
+	</field>
+	<field name="RET2" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="RET2"/>
+	</field>
+	<field name="NDA_VLD_STATUS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="NDA_VLD_STATUS"/>
+	</field>
+	<field name="NDA_VLD_FINALIZADO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="NDA_VLD_FINALIZADO"/>
+	</field>
+	<field name="CF_CUSTO_LIQUIDO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CF_CUSTO_LIQUIDO"/>
+	</field>
+	<field name="CF_VALOR_MERCADORIA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CF_VALOR_MERCADORIA"/>
+	</field>
+	<field name="CF_VALOR_NF_ENTRADA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CF_VALOR_NF_ENTRADA"/>
+	</field>
+	<field name="CF_CUSTO_ANTEC_CLIENTE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CF_CUSTO_ANTEC_CLIENTE"/>
+	</field>
+	<field name="INC_VLD_FRETE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="INC_VLD_FRETE"/>
+	</field>
+	<field name="INC_VLD_SEGURO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="INC_VLD_SEGURO"/>
+	</field>
+	<variable name="CS_CF_AUX_CUSTO" class="java.math.BigDecimal" calculation="Sum"/>
+	<variable name="CS_NF_SERVICO" class="java.math.BigDecimal" calculation="Sum"/>
+	<variable name="CIF" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{FOB} != null ? $F{FOB}.doubleValue():0) +
+($F{FRETE} != null ? $F{FRETE}.doubleValue():0) +
+($F{SEGURO} != null ? $F{SEGURO}.doubleValue():0) +
+($F{THC} != null ? $F{THC}.doubleValue():0)]]></variableExpression>
+	</variable>
+	<variable name="CIF_FISCAL" class="java.lang.Double">
+		<variableExpression><![CDATA[($V{CF_FOB_FISCAL} != null ? $V{CF_FOB_FISCAL}:0) +
+($V{CF_FRETE_FISCAL} != null ? $V{CF_FRETE_FISCAL}:0) +
+($V{CF_SEGURO_FISCAL} != null ? $V{CF_SEGURO_FISCAL}:0) +
+($V{CF_THC_FISCAL} != null ? $V{CF_THC_FISCAL}:0)]]></variableExpression>
+	</variable>
+	<variable name="CF_FOB_FISCAL" class="java.lang.Double">
+		<variableExpression><![CDATA[( $F{TAXA_FISCAL}.doubleValue() != 0
+	?$F{FOB}.doubleValue() / $F{TAXA_FISCAL}.doubleValue()
+	:0
+)]]></variableExpression>
+	</variable>
+	<variable name="CF_FRETE_FISCAL" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{TAXA_FISCAL}.doubleValue() != 0
+	?$F{FRETE}.doubleValue() / $F{TAXA_FISCAL}.doubleValue()
+	:0
+)]]></variableExpression>
+	</variable>
+	<variable name="CF_THC_FISCAL" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{TAXA_FISCAL}.doubleValue() != 0
+	?$F{THC}.doubleValue() / $F{TAXA_FISCAL}.doubleValue()
+	:0
+)]]></variableExpression>
+	</variable>
+	<variable name="CF_SEGURO_FISCAL" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{TAXA_FISCAL}.doubleValue() != 0
+	?$F{SEGURO}.doubleValue() / $F{TAXA_FISCAL}.doubleValue()
+	:0
+)]]></variableExpression>
+	</variable>
+	<variable name="CS_TX_UTI_SISCOMEX" class="java.math.BigDecimal" calculation="Sum"/>
+	<variable name="CS_TOTAL_SAIDAS" class="java.math.BigDecimal" calculation="Sum"/>
+	<variable name="CS_TOTAL_SAIDAS_DOLAR" class="java.lang.Double" calculation="Sum"/>
+	<variable name="CS_DESCONTO_COMERCIAL" class="java.math.BigDecimal" calculation="Sum"/>
+	<variable name="CF_SOMAR" class="java.math.BigDecimal" calculation="Sum"/>
+	<pageHeader>
+		<band height="70">
+			<frame>
+				<reportElement x="12" y="0" width="571" height="70" uuid="8c3c76b0-3456-4bd4-9bf5-87ed1f8b0393"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<componentElement>
+					<reportElement x="0" y="0" width="571" height="70" uuid="04a553d2-cd2f-4084-b1e3-5d81cad3f5cb">
+						<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="CABECALHO"/>
+					</reportElement>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Q_2" uuid="3e4d3431-b813-463b-9326-ea0795c3acf4">
+							<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+							<datasetParameter name="ORACLE_REF_CURSOR">
+								<datasetParameterExpression><![CDATA[$P{ORACLE_REF_CURSOR}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="XREPORT_DATA">
+								<datasetParameterExpression><![CDATA[$P{XREPORT_DATA}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:listContents height="70" width="571">
+							<textField pattern="" isBlankWhenNull="true">
+								<reportElement mode="Transparent" x="300" y="5" width="265" height="14" uuid="01f58fbd-fc00-47b7-ba4a-aa9a3c947169">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{FIL_DES_RSOCIAL}]]></textFieldExpression>
+							</textField>
+							<textField pattern="" isBlankWhenNull="true">
+								<reportElement mode="Transparent" x="300" y="19" width="265" height="14" uuid="462f57d0-2d9b-4e3d-ac81-e055a3f98a09"/>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{END1}]]></textFieldExpression>
+							</textField>
+							<textField pattern="" isBlankWhenNull="true">
+								<reportElement mode="Transparent" x="300" y="33" width="265" height="14" uuid="4531607c-ff3b-48c7-9232-901df3f466a2"/>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{END2}]]></textFieldExpression>
+							</textField>
+							<textField pattern="" isBlankWhenNull="true">
+								<reportElement mode="Transparent" x="300" y="47" width="265" height="14" uuid="da407665-efe6-471d-aff0-fb0cece33c0b"/>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{TELEFONE}]]></textFieldExpression>
+							</textField>
+							<image hAlign="Center" vAlign="Middle">
+								<reportElement mode="Transparent" x="5" y="0" width="100" height="70" uuid="8a30350d-bbe8-4ce4-8aab-8e4eaf488aaf">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<imageExpression><![CDATA[$P{XREPORT_DATA}.get("FIL_BIT_LOGO")]]></imageExpression>
+							</image>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+			</frame>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="674" splitType="Stretch">
+			<frame>
+				<reportElement x="12" y="0" width="571" height="70" isRemoveLineWhenBlank="true" uuid="09e68cb0-c7a1-4343-a624-e1a4cd0809ee">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textField isBlankWhenNull="true">
+					<reportElement key="" mode="Opaque" x="0" y="0" width="571" height="12" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" backcolor="#1100AD" uuid="b650874a-ed44-4a0e-8151-ce55a0d2e724">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["PLANILHA PRÉ-CÁLCULO"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="5" y="22" width="97" height="10" isRemoveLineWhenBlank="true" uuid="9fec84a3-4edd-4156-a52c-d8a442727ae4"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Origem]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="22" width="76" height="10" isRemoveLineWhenBlank="true" uuid="15088f41-4ec1-41f5-8cc6-8ebeb4c38300"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[NCM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="32" width="97" height="10" isRemoveLineWhenBlank="true" uuid="acbf2234-5563-4b6d-b2fe-fd11bf6dcfe1"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Destino]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="32" width="76" height="10" isRemoveLineWhenBlank="true" uuid="4edbb3e6-d594-46e7-8b81-60dda3e5bb2c"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[uto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="62" width="97" height="10" isRemoveLineWhenBlank="true" uuid="cf93ec41-6762-4f20-a3d9-9bbdd214ebff"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Tipo de Operação]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="72" width="97" height="10" isRemoveLineWhenBlank="true" uuid="b25c6e7b-eaee-40b8-8bfe-2f25b55dd044"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[N/Referência]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="82" width="97" height="10" isRemoveLineWhenBlank="true" uuid="4b0854cd-849c-49fa-b861-9138544b8056"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Referência do Cliente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="92" width="97" height="10" isRemoveLineWhenBlank="true" uuid="9f6c9f1f-526b-4a9d-9553-0787109bda3a"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Exportador]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="102" width="97" height="10" isRemoveLineWhenBlank="true" uuid="b2c04b90-b1f4-46ff-ac2c-82b69b641947"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Finalidade]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="112" width="97" height="10" isRemoveLineWhenBlank="true" uuid="2bc700b8-dcdb-4ee1-a677-b2a4eec4b80e"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Tributação]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="42" width="97" height="10" isRemoveLineWhenBlank="true" uuid="8d674797-41fd-4ff1-a7b9-35d309881cf5"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Transporte]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="52" width="97" height="10" isRemoveLineWhenBlank="true" uuid="58e366fa-70d0-4be7-ac40-a21a8e943feb"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Taxa Fiscal]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="52" width="76" height="10" isRemoveLineWhenBlank="true" uuid="1e1c24d5-b36c-4d1f-8d7e-08749469d0d2"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[FOB]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="62" width="76" height="10" isRemoveLineWhenBlank="true" uuid="730104f4-a2b8-4f08-b620-a076fa6d3b4b"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Frete Internacional]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="72" width="76" height="10" isRemoveLineWhenBlank="true" uuid="7dd44ca0-af39-46ec-9297-79933f12c9ce"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Seguro]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="82" width="76" height="10" isRemoveLineWhenBlank="true" uuid="c320edbb-de7f-456d-9a4c-3b508aad53e0"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[THC]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="92" width="76" height="10" isRemoveLineWhenBlank="true" uuid="eb4f7be3-fe82-4bd7-a55f-c8d6811f37d5"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[CIF]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="102" width="76" height="10" isRemoveLineWhenBlank="true" uuid="c28fb01f-fe7d-4a0f-98d3-5c55fad83973"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Peso Líquido]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="112" width="76" height="10" isRemoveLineWhenBlank="true" uuid="b35b03a1-c285-4efe-b4c6-20258241db66"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Peso Bruto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="122" width="76" height="10" isRemoveLineWhenBlank="true" uuid="a6e073cf-82bb-40bf-98f2-51fc42121655"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[INCOTERM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="132" width="76" height="10" isRemoveLineWhenBlank="true" uuid="db47942c-c744-4929-a485-07a6d2d18726"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Estado do Cliente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="389" y="102" width="21" height="10" isRemoveLineWhenBlank="true" uuid="bb6bf5f5-6676-4979-830e-2f37a6cd6c03"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<text><![CDATA[KG]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="389" y="112" width="21" height="10" isRemoveLineWhenBlank="true" uuid="a01303e6-416b-4a45-8928-eeaccfa4ca23"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<text><![CDATA[KG]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="12" width="97" height="10" isRemoveLineWhenBlank="true" uuid="755a3113-180c-41ed-9516-193750921ffa"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Cliente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="313" y="12" width="76" height="10" isRemoveLineWhenBlank="true" uuid="560f186e-4b3d-46ab-9729-1cd9239a0265"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Data de Emissão]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="102" y="12" width="206" height="10" isRemoveLineWhenBlank="true" uuid="f2734de5-d948-439a-b969-64d293638a09"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CLIENTE}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="102" y="22" width="206" height="10" isRemoveLineWhenBlank="true" uuid="b51606fe-00be-45b8-8d1a-928c27fdaa65"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ORIGEM}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="102" y="32" width="206" height="10" isRemoveLineWhenBlank="true" uuid="330160b8-a012-4458-ac74-06cb764e7109"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DESTINO}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="102" y="42" width="206" height="10" isRemoveLineWhenBlank="true" uuid="e1eb52c9-8409-4015-be2a-1f14489ef5a2">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{VIA_TRANSPORTE}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.0000" isBlankWhenNull="true">
+					<reportElement x="102" y="52" width="206" height="10" isRemoveLineWhenBlank="true" uuid="de474baf-5f01-495f-be62-7a51b468bbf0"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TAXA_FISCAL}.setScale( 4, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="102" y="62" width="206" height="10" isRemoveLineWhenBlank="true" uuid="31c71c60-f756-4629-b515-58e79133340b"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TIPO_OPERACAO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="102" y="72" width="206" height="10" isRemoveLineWhenBlank="true" uuid="869277dc-a56b-4fc7-8d75-aeffe09a0e66"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{REFERENCIA_EXT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="102" y="82" width="206" height="10" isRemoveLineWhenBlank="true" uuid="1320d9a4-b7c8-4716-8de8-d0bd622dce19"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{REFERENCIA_CLIENTE}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="102" y="92" width="206" height="10" isRemoveLineWhenBlank="true" uuid="70fb5c71-43da-4fb1-a046-dff171321e7f"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{EXPORTADOR}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="102" y="102" width="206" height="10" isRemoveLineWhenBlank="true" uuid="a40f0706-e4aa-4a6a-896f-97453bae1be3"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FINALIDADE}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="102" y="112" width="206" height="10" isRemoveLineWhenBlank="true" uuid="5a3edfb8-f467-4677-8a6e-05c910b3a8c4"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TRIBUTACAO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="389" y="132" width="182" height="10" isRemoveLineWhenBlank="true" uuid="0363a01a-6a7d-469c-af38-361f12ae5709"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ESTADO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.0000" isBlankWhenNull="true">
+					<reportElement x="410" y="112" width="161" height="10" isRemoveLineWhenBlank="true" uuid="0bffed1a-413e-4749-bf50-36f5b6a639fa"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PESO_BRUTO}.setScale( 4, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.00" isBlankWhenNull="true">
+					<reportElement x="410" y="72" width="161" height="10" isRemoveLineWhenBlank="true" uuid="14774dcd-f7e3-4ec4-8f20-b8b441a743e8"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(Objects.isNull($F{TAXA_FISCAL}) || $F{TAXA_FISCAL}.doubleValue() == 0 ? 0.0 :
+	($F{SEGURO}.doubleValue() / $F{TAXA_FISCAL}.doubleValue() )
+)]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.00" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="410" y="92" width="161" height="10" isRemoveLineWhenBlank="true" uuid="0479d393-a164-4ade-9be8-341170722df8"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(Objects.isNull($F{TAXA_FISCAL}) || $F{TAXA_FISCAL}.doubleValue() == 0 ? 0.0 :
+	($V{CIF}.doubleValue() / $F{TAXA_FISCAL}.doubleValue() )
+)]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.0000" isBlankWhenNull="true">
+					<reportElement key="" x="410" y="102" width="161" height="10" isRemoveLineWhenBlank="true" uuid="a68d9154-2757-439f-b02f-2ea92a2eda57"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PESO_LIQ}.setScale( 4, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="389" y="122" width="182" height="10" isRemoveLineWhenBlank="true" uuid="b03c4024-1fdb-4ca6-afad-8d5f45e610e7"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{INCOTERM}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="389" y="22" width="182" height="10" isRemoveLineWhenBlank="true" uuid="5d77ed42-16f6-4372-9870-938ba44b22ec"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NCM}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.00" isBlankWhenNull="true">
+					<reportElement x="410" y="62" width="161" height="10" isRemoveLineWhenBlank="true" uuid="ff7f9b73-c8e9-401f-a69e-b4882997f20d"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(Objects.isNull($F{TAXA_FISCAL}) || $F{TAXA_FISCAL}.doubleValue() == 0 ? 0.0 :
+	($F{FRETE}.doubleValue() / $F{TAXA_FISCAL}.doubleValue() )
+)]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.00" isBlankWhenNull="true">
+					<reportElement x="410" y="82" width="161" height="10" isRemoveLineWhenBlank="true" uuid="12546a19-d0b6-471e-98f2-f0bd32b3742e"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(Objects.isNull($F{TAXA_FISCAL}) || $F{TAXA_FISCAL}.doubleValue() == 0 ? 0.0 :
+	($F{THC}.doubleValue() / $F{TAXA_FISCAL}.doubleValue() )
+)]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="389" y="32" width="182" height="10" isRemoveLineWhenBlank="true" uuid="36bd12d4-1186-420e-ba53-ae114db0e12c"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{UTO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.00" isBlankWhenNull="true">
+					<reportElement x="410" y="52" width="161" height="10" isRemoveLineWhenBlank="true" uuid="dec339ed-f531-4989-8ebf-09acbfd301ed"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(Objects.isNull($F{TAXA_FISCAL}) || $F{TAXA_FISCAL}.doubleValue() == 0 ? 0.0 :
+	($F{FOB}.doubleValue() / $F{TAXA_FISCAL}.doubleValue() )
+)]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+					<reportElement x="389" y="12" width="182" height="10" isRemoveLineWhenBlank="true" uuid="bee28536-1465-4555-b204-6bb72a0f73fa"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NDA_DTA_TX_FOB}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="5" y="122" width="97" height="10" isRemoveLineWhenBlank="true" uuid="14d5dbbb-53e4-4bf5-8f1e-f97d7998a2e8"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Operação]]></text>
+				</staticText>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="102" y="122" width="206" height="10" isRemoveLineWhenBlank="true" uuid="fce4cbf5-60f5-4e84-8a4a-bc507d78fe88"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{OPERACAO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="313" y="42" width="76" height="10" isRemoveLineWhenBlank="true" uuid="ab502242-6080-4b41-ac12-e50bd549ab99"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[Moeda]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="389" y="42" width="182" height="10" isRemoveLineWhenBlank="true" uuid="41331467-dc1f-4eaa-868f-acd1af113853"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MOEDA}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="389" y="52" width="21" height="10" isRemoveLineWhenBlank="true" uuid="194a5456-9099-447f-8a7f-e17b788aac1f"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MOEDA_SIGLA}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="389" y="82" width="21" height="10" isRemoveLineWhenBlank="true" uuid="6b886464-0885-4307-93c7-5113ebf54e97"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MOEDA_SIGLA}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="389" y="92" width="21" height="10" isRemoveLineWhenBlank="true" uuid="4139c101-f07d-4171-94bc-a69c747ace02"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MOEDA_SIGLA}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="389" y="62" width="21" height="10" isRemoveLineWhenBlank="true" uuid="d0d87526-6e8b-449e-85b9-89d2f2d802c3"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MOEDA_SIGLA}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="389" y="72" width="21" height="10" isRemoveLineWhenBlank="true" uuid="0c0cbc56-c7b4-41c0-8829-8b6cbbd0ec9f"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MOEDA_SIGLA}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement key="" positionType="Float" mode="Transparent" x="12" y="142" width="571" height="70" isRemoveLineWhenBlank="true" uuid="bfb09741-78dd-4fa0-96c6-6e3effc1c23e">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textField isBlankWhenNull="true">
+					<reportElement key="" mode="Opaque" x="0" y="0" width="571" height="12" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" backcolor="#1100AD" uuid="ca4b27f5-14b5-4e2a-9512-7aa601e9f340">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["VALOR DA MERCADORIA"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="5" y="12" width="97" height="10" isRemoveLineWhenBlank="true" uuid="5b23ecc0-0ab6-4286-9382-fbe98a00b54d">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[FOB]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="22" width="97" height="10" isRemoveLineWhenBlank="true" uuid="b733233e-1aa5-44bf-bc5d-79aed6acda3a"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[FRETE INTERNACIONAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="32" width="97" height="10" isRemoveLineWhenBlank="true" uuid="dacb7754-96f5-4fbd-848a-8ef58780d179"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[THC]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="42" width="97" height="10" isRemoveLineWhenBlank="true" uuid="796bf947-e0dd-494f-be02-7cdcb598bbdc"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[SEGURO]]></text>
+				</staticText>
+				<frame>
+					<reportElement mode="Opaque" x="0" y="52" width="570" height="12" backcolor="#1100AD" uuid="75bf20df-7ce0-48af-b169-c07526f59921"/>
+					<staticText>
+						<reportElement x="5" y="0" width="345" height="12" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" uuid="9f6044d5-a6e9-4076-9cb8-7588e277c373"/>
+						<textElement textAlignment="Left">
+							<font fontName="Arial" size="7" isBold="true"/>
+						</textElement>
+						<text><![CDATA[CIF]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="454" y="0" width="13" height="12" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" uuid="4d19c830-077d-4b93-bc27-0aaf367fec9a">
+							<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						</reportElement>
+						<textElement textAlignment="Right">
+							<font fontName="Arial" size="7" isBold="true"/>
+						</textElement>
+						<text><![CDATA[R$]]></text>
+					</staticText>
+					<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+						<reportElement x="467" y="0" width="103" height="12" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" uuid="ef935d18-fce6-4cd8-9038-3a856c609ffb">
+							<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						</reportElement>
+						<textElement textAlignment="Right">
+							<font fontName="Arial" size="7" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{CIF}]]></textFieldExpression>
+					</textField>
+					<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+						<reportElement x="350" y="0" width="104" height="12" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" uuid="7d12f4b0-fa6b-4d20-9d4c-f0bcf355f337">
+							<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						</reportElement>
+						<textElement textAlignment="Right">
+							<font fontName="Arial" size="7" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[(Objects.isNull($F{TAXA_FISCAL}) || $F{TAXA_FISCAL}.doubleValue() == 0 ? 0.0 :
+	($V{CIF}.doubleValue() / $F{TAXA_FISCAL}.doubleValue() )
+)]]></textFieldExpression>
+					</textField>
+				</frame>
+				<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement x="467" y="12" width="104" height="10" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="e7e70b9f-8c68-493e-9f63-10a744abb9d3">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FOB}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement x="467" y="22" width="104" height="10" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="adc7a45c-d380-485a-90d4-b4d7edcf4a8e">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FRETE}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement x="467" y="32" width="104" height="10" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="4ae73ec9-6b0c-4b98-89a9-00de38e4f5e4">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{THC}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement x="467" y="42" width="104" height="10" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="f85d4c7d-a496-42cf-9bec-8ce994595f77">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SEGURO}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement x="350" y="42" width="104" height="10" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="78be880f-e732-4ae8-8bd4-b73646ff3e36">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{CF_SEGURO_FISCAL}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement x="350" y="22" width="104" height="10" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="3ad5b4ab-92e3-448f-8f9d-a2907a9c4a75">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{CF_FRETE_FISCAL}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement x="350" y="12" width="104" height="10" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="7506f0bf-0e26-4918-a1c4-22fc4f633625">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{CF_FOB_FISCAL}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement x="350" y="32" width="104" height="10" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="54ae6719-d8bd-434f-9a0b-ef03e0c37c0d">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{CF_THC_FISCAL}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="350" y="0" width="104" height="10" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" uuid="99500d02-3565-48e7-97e6-af83f7904ce4">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{MOEDA_SIGLA}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="467" y="0" width="104" height="10" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" uuid="baa3a68e-c673-4cf2-9c7e-a03188e4aadb">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["R$"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="12" y="214" width="571" height="70" isRemoveLineWhenBlank="true" uuid="8155eab8-20d2-4104-9c27-aba61a8a5711"/>
+				<componentElement>
+					<reportElement x="0" y="0" width="571" height="38" isRemoveLineWhenBlank="true" uuid="0273c5f9-855a-4c30-8865-cdaaaca4f979">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+						<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+						<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+						<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="Q_3" uuid="aa9f4ad3-6520-4960-aded-1e24d3a1a502">
+							<datasetParameter name="FIL_COD">
+								<datasetParameterExpression><![CDATA[$F{FIL_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="NDA_COD">
+								<datasetParameterExpression><![CDATA[$F{NDA_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="NEG_COD">
+								<datasetParameterExpression><![CDATA[$F{NEG_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="TAXA_FISCAL">
+								<datasetParameterExpression><![CDATA[$F{TAXA_FISCAL}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="ORACLE_REF_CURSOR">
+								<datasetParameterExpression><![CDATA[$P{ORACLE_REF_CURSOR}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="COFINS">
+								<datasetParameterExpression><![CDATA[$P{COFINS}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+							<returnValue fromVariable="CS_TX_UTI_SISCOMEX" toVariable="CS_TX_UTI_SISCOMEX"/>
+						</datasetRun>
+						<jr:column width="571" uuid="22c32f1d-0d37-44b2-8f7b-195b5888ed8a">
+							<jr:groupHeader groupName="G_FIL_COD">
+								<jr:cell height="12">
+									<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+									<textField isBlankWhenNull="true">
+										<reportElement key="" mode="Opaque" x="0" y="0" width="571" height="12" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" backcolor="#1100AD" uuid="cc86d05e-da45-4ab0-9bb4-f0e5a638ba6e">
+											<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+											<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+										</reportElement>
+										<textElement textAlignment="Center">
+											<font fontName="Arial" size="9" isBold="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{GRUPO}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupHeader>
+							<jr:groupFooter groupName="G_FIL_COD">
+								<jr:cell height="16">
+									<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+									<frame>
+										<reportElement x="0" y="0" width="571" height="16" uuid="c7424b6f-7bf7-4c15-8c49-1427ff93ed70"/>
+										<frame>
+											<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="571" height="12" isRemoveLineWhenBlank="true" backcolor="#1100AD" uuid="57b9f997-a6b8-4810-a52a-f4328bd2651a">
+												<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+												<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+											</reportElement>
+											<staticText>
+												<reportElement positionType="Float" x="450" y="0" width="15" height="12" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" uuid="109bfc63-2586-4df6-ba34-5b79a62d331b"/>
+												<textElement textAlignment="Right">
+													<font fontName="Arial" size="7" isBold="true"/>
+												</textElement>
+												<text><![CDATA[R$]]></text>
+											</staticText>
+											<textField>
+												<reportElement positionType="Float" x="5" y="0" width="345" height="12" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" uuid="382ad456-c7bc-425c-bf49-13ec66d164f1">
+													<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+												</reportElement>
+												<textElement textAlignment="Left">
+													<font fontName="Arial" size="7" isBold="true"/>
+												</textElement>
+												<textFieldExpression><![CDATA["TOTAL " + ($F{GRUPO} != null? $F{GRUPO}:"")]]></textFieldExpression>
+											</textField>
+											<textField textAdjust="StretchHeight" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+												<reportElement x="465" y="0" width="106" height="10" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" uuid="2704647a-1d01-4dbd-ae1f-94e40ff37db3">
+													<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+												</reportElement>
+												<textElement textAlignment="Right">
+													<font fontName="Arial" size="7" isBold="true"/>
+												</textElement>
+												<textFieldExpression><![CDATA[$V{CS_VALOR}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+											</textField>
+											<textField textAdjust="StretchHeight" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+												<reportElement x="350" y="0" width="100" height="10" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" uuid="0b95a5a6-b31e-4b53-8228-53ade1eb4059">
+													<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+												</reportElement>
+												<textElement textAlignment="Right">
+													<font fontName="Arial" size="7" isBold="true"/>
+												</textElement>
+												<textFieldExpression><![CDATA[(($P{TAXA_FISCAL} != null && $P{TAXA_FISCAL}.doubleValue() != 0) && $V{CS_VALOR} != null
+	? $V{CS_VALOR}.doubleValue() / $P{TAXA_FISCAL}.doubleValue()
+	:0
+)]]></textFieldExpression>
+											</textField>
+										</frame>
+									</frame>
+								</jr:cell>
+							</jr:groupFooter>
+							<jr:detailCell height="10">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+								<textField textAdjust="StretchHeight" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+									<reportElement positionType="Float" x="465" y="0" width="106" height="10" isRemoveLineWhenBlank="true" uuid="35146a24-3236-4b5e-9242-89ae19bdbb61">
+										<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									</reportElement>
+									<textElement textAlignment="Right">
+										<font fontName="Arial" size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[( $F{DESCRICAO}.equals("ICMS") && $F{VALOR}.doubleValue() == 0
+	?"DIFERIDO"
+	:$F{VALOR}.setScale( 2, java.math.RoundingMode.HALF_UP )
+)]]></textFieldExpression>
+								</textField>
+								<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+									<reportElement positionType="Float" x="5" y="0" width="345" height="10" isRemoveLineWhenBlank="true" uuid="5b7e2bf1-8ec6-48df-957c-951d46457a8c">
+										<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									</reportElement>
+									<textElement textAlignment="Left">
+										<font fontName="Arial" size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{DESCRICAO}]]></textFieldExpression>
+								</textField>
+								<textField textAdjust="StretchHeight" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+									<reportElement positionType="Float" x="350" y="0" width="115" height="10" isRemoveLineWhenBlank="true" uuid="8b5131fb-dc65-4599-94e3-525fd552b95d">
+										<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+									</reportElement>
+									<textElement textAlignment="Right">
+										<font fontName="Arial" size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[( $F{DESCRICAO}.equals("ICMS") && $F{VALOR}.doubleValue() == 0
+	?"DIFERIDO"
+	:($P{TAXA_FISCAL} != null  && $P{TAXA_FISCAL}.doubleValue() != 0?$F{VALOR}.doubleValue() / $P{TAXA_FISCAL}.doubleValue():0)
+)]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</frame>
+			<frame>
+				<reportElement key="" positionType="Float" mode="Transparent" x="12" y="284" width="571" height="70" isRemoveLineWhenBlank="true" uuid="306affe8-e13f-4fa3-bad6-e8578cac2304">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="571" height="12" forecolor="#FFFFFF" backcolor="#1100AD" uuid="5d5e011b-8903-4229-93c0-4332d23e39c7">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CUSTO DE ENTRADA NO ESTOQUE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="52" width="195" height="10" uuid="af7ce1a7-a0e5-43cb-b2c1-75284fde817d"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<text><![CDATA[COFINS DE NACIONALIZAÇÃO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="22" width="195" height="10" uuid="3c49d64a-4339-49fe-965f-8a9fb2400b7e"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<text><![CDATA[CRÉDITO DE IPI]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="12" width="195" height="10" uuid="dc635a8b-3d9f-4af4-bac7-ee84c739f921">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALOR TOTAL DA NF DE ENTRADA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="32" width="195" height="10" uuid="9b96bb15-23c1-4fd1-86c8-ae832f011e81">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<text><![CDATA[CRÉDITO DE ICMS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="42" width="195" height="10" uuid="46a97bdf-93d3-469d-ba55-c19a0e03783e"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<text><![CDATA[PIS DE NACIONALIZAÇÃO]]></text>
+				</staticText>
+				<frame>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="62" width="571" height="12" backcolor="#1100AD" uuid="627c04b4-c2d3-43bf-b19a-f3d5e48eb20a">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+					<staticText>
+						<reportElement positionType="Float" x="5" y="0" width="286" height="12" forecolor="#FFFFFF" uuid="175623f5-c6cc-49b3-b09a-e810aa7afeaf">
+							<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						</reportElement>
+						<textElement textAlignment="Left">
+							<font fontName="Arial" size="7" isBold="true"/>
+						</textElement>
+						<text><![CDATA[CUSTO LÍQUIDO]]></text>
+					</staticText>
+					<staticText>
+						<reportElement positionType="Float" x="437" y="0" width="28" height="12" forecolor="#FFFFFF" uuid="8aa7b1a6-2de6-43bd-a3fe-cc5ab074d83b"/>
+						<textElement textAlignment="Right">
+							<font fontName="Arial" size="7" isBold="true"/>
+						</textElement>
+						<text><![CDATA[R$]]></text>
+					</staticText>
+				</frame>
+				<componentElement>
+					<reportElement positionType="Float" x="348" y="22" width="223" height="52" uuid="e2aa6036-f455-4bf1-86a3-c554e610210e">
+						<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="CUSTO_ENTRADA_ESTOQUE"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Q_5" uuid="fe3b4428-90b2-4ce0-b7a0-1f7a28ba5c75">
+							<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+							<datasetParameter name="ORACLE_REF_CURSOR">
+								<datasetParameterExpression><![CDATA[$P{ORACLE_REF_CURSOR}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="FIL_COD">
+								<datasetParameterExpression><![CDATA[$F{FIL_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="NEG_COD">
+								<datasetParameterExpression><![CDATA[$F{NEG_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="NDA_COD">
+								<datasetParameterExpression><![CDATA[$F{NDA_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="PRI_VLD_TIPO">
+								<datasetParameterExpression><![CDATA[$F{PRI_VLD_TIPO}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="CF_VALOR_NF_ENTRADA">
+								<datasetParameterExpression><![CDATA[$F{CF_VALOR_NF_ENTRADA}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="TAXA_FISCAL">
+								<datasetParameterExpression><![CDATA[$F{TAXA_FISCAL}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:listContents height="52" width="223">
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="106" height="10" uuid="8e376006-a3fd-4002-b720-254de0944505">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($P{TAXA_FISCAL} != null && $P{TAXA_FISCAL}.doubleValue() != 0  
+	?$F{CREDITO_IPI}.doubleValue() / $P{TAXA_FISCAL}.doubleValue()
+	: 0
+)]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="0" y="10" width="106" height="10" uuid="594fd459-db0b-421b-bdde-1f83fd2925ab"/>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($P{TAXA_FISCAL} != null && $P{TAXA_FISCAL}.doubleValue() != 0  
+	?$F{CREDITO_ICMS}.doubleValue() / $P{TAXA_FISCAL}.doubleValue()
+	: 0
+)]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="0" y="20" width="106" height="10" uuid="fd14d2b5-0958-404f-95e2-dfe1f3e3df1d">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($P{TAXA_FISCAL} != null && $P{TAXA_FISCAL}.doubleValue() != 0  
+	?$F{PIS_NAC}.doubleValue() / $P{TAXA_FISCAL}.doubleValue()
+	: 0
+)]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="0" y="30" width="106" height="10" uuid="2d602ca5-cf12-489b-bf59-3f392f8855b4">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($P{TAXA_FISCAL} != null && $P{TAXA_FISCAL}.doubleValue() != 0  
+	?$F{COFINS_NAC}.doubleValue() / $P{TAXA_FISCAL}.doubleValue()
+	: 0
+)]]></textFieldExpression>
+							</textField>
+							<textField evaluationTime="Report" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="117" y="40" width="106" height="12" forecolor="#FFFFFF" uuid="600acdff-3c36-4278-bb20-90ab48bdad15">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[/*CF_CUSTO_ENTRADA */
+(
+	($P{CF_VALOR_NF_ENTRADA} == null ? 0.0 : $P{CF_VALOR_NF_ENTRADA}.doubleValue())
+	- ( $F{CREDITO_IPI}.doubleValue() + $F{CREDITO_ICMS}.doubleValue() + $F{PIS_NAC}.doubleValue() + $F{COFINS_NAC}.doubleValue())
+)]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="117" y="10" width="106" height="10" uuid="b4f5cc99-97de-4737-bbe3-357a1e54d527"/>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CREDITO_ICMS}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="117" y="20" width="106" height="10" uuid="e258f176-32f3-4ab5-90be-8b47d3a00e21">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PIS_NAC}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="117" y="30" width="106" height="10" uuid="eace9661-8346-49f2-b024-1117ec89e237">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{COFINS_NAC}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="117" y="0" width="106" height="10" uuid="d0da57f7-c4d5-45c6-bb15-799d06abc426">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CREDITO_IPI}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+							</textField>
+							<textField evaluationTime="Report" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="0" y="40" width="106" height="12" forecolor="#FFFFFF" uuid="5bea134c-854b-4d8f-b0b5-0c0858bb19e7">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[/*CF_CUSTO_ENTRADA_DOLAR */
+(($P{TAXA_FISCAL} == null && $P{TAXA_FISCAL}.doubleValue() == 0.0 )
+	? 0.0 :
+	(($P{CF_VALOR_NF_ENTRADA} == null ? 0.0 : $P{CF_VALOR_NF_ENTRADA}.doubleValue()) - ( $F{CREDITO_IPI}.doubleValue() + $F{CREDITO_ICMS}.doubleValue() + $F{PIS_NAC}.doubleValue() + $F{COFINS_NAC}.doubleValue())) / $P{TAXA_FISCAL}.doubleValue()
+)]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<textField evaluationTime="Auto" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement x="348" y="12" width="106" height="10" uuid="793c938c-49a4-43a6-979f-dbcb5b1b4e36">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[/*CF_VALOR_NF_ENTRADA_DOLAR */
+($F{TAXA_FISCAL}.doubleValue() != 0.0 || $F{TAXA_FISCAL} == null
+	? (($F{CF_VALOR_NF_ENTRADA}.doubleValue()) + ($V{CS_TX_UTI_SISCOMEX} == null ? 0.0 : $V{CS_TX_UTI_SISCOMEX}.doubleValue())) / $F{TAXA_FISCAL}.doubleValue()
+	: 0.0
+)]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Auto" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement x="465" y="12" width="106" height="10" uuid="aeffa416-e602-4b11-8993-1254c840dbe7">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(Objects.isNull($F{CF_VALOR_NF_ENTRADA}) ? 0 : $F{CF_VALOR_NF_ENTRADA}.doubleValue()) + (Objects.isNull($V{CS_TX_UTI_SISCOMEX}) ? 0 : $V{CS_TX_UTI_SISCOMEX}.doubleValue())]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" mode="Transparent" x="12" y="354" width="571" height="70" isRemoveLineWhenBlank="true" uuid="d72aa8d9-cd91-47c8-8fa0-3f07244e5712">
+					<printWhenExpression><![CDATA[$F{PRI_VLD_TIPO}.intValue() != 0]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="571" height="12" forecolor="#FFFFFF" backcolor="#1100AD" uuid="67ab270a-8152-4e8a-a9fe-18dd75b46ab1">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[IMPOSTOS DA NF SAÍDA]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement x="0" y="12" width="571" height="22" uuid="95bc2c35-8890-43e7-a037-7d36da9fbd5b">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+						<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+						<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+						<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+						<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="IMP_NFSAIDA"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="Q_6" uuid="0b035bdb-f1d0-4971-b404-5a9e3a27b502">
+							<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+							<datasetParameter name="ORACLE_REF_CURSOR">
+								<datasetParameterExpression><![CDATA[$P{ORACLE_REF_CURSOR}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="FIL_COD">
+								<datasetParameterExpression><![CDATA[$F{FIL_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="NEG_COD">
+								<datasetParameterExpression><![CDATA[$F{NEG_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="NDA_COD">
+								<datasetParameterExpression><![CDATA[$F{NDA_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="PRI_VLD_TIPO">
+								<datasetParameterExpression><![CDATA[$F{PRI_VLD_TIPO}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="TAXA_FISCAL">
+								<datasetParameterExpression><![CDATA[$F{TAXA_FISCAL}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="571" uuid="b385f827-34a0-4f04-afa9-989f96b51b6d">
+							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<jr:columnFooter height="12">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<frame>
+									<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="571" height="12" backcolor="#1100AD" uuid="a9281f25-ac94-423b-8118-7d7cc0bf5fed">
+										<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+										<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+									</reportElement>
+									<staticText>
+										<reportElement positionType="Float" x="5" y="0" width="286" height="12" forecolor="#FFFFFF" uuid="0f164ab7-33ca-480d-90ea-77ad1f8435ae">
+											<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+										</reportElement>
+										<textElement textAlignment="Left">
+											<font fontName="Arial" size="7" isBold="true"/>
+										</textElement>
+										<text><![CDATA[VALOR TOTAL DA NF SAÍDA]]></text>
+									</staticText>
+									<staticText>
+										<reportElement positionType="Float" x="454" y="0" width="11" height="12" forecolor="#FFFFFF" uuid="1ee824ad-2800-48e0-b123-a6a47b721af2"/>
+										<textElement textAlignment="Right">
+											<font fontName="Arial" size="7" isBold="true"/>
+										</textElement>
+										<text><![CDATA[R$]]></text>
+									</staticText>
+									<textField textAdjust="StretchHeight" evaluationTime="Report" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+										<reportElement x="465" y="0" width="106" height="10" forecolor="#FFFFFF" uuid="e4f57447-6091-43ea-b4ff-478479a8bee6">
+											<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+										</reportElement>
+										<textElement textAlignment="Right">
+											<font fontName="Arial" size="7" isBold="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{CS_TOTAL_SAIDAS}]]></textFieldExpression>
+									</textField>
+									<textField textAdjust="StretchHeight" evaluationTime="Report" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+										<reportElement x="348" y="0" width="106" height="10" forecolor="#FFFFFF" uuid="163a7347-5cbd-44e5-96c8-34abcca8d14d">
+											<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+										</reportElement>
+										<textElement textAlignment="Right">
+											<font fontName="Arial" size="7" isBold="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{CS_TOTAL_SAIDAS_DOLAR}]]></textFieldExpression>
+									</textField>
+								</frame>
+							</jr:columnFooter>
+							<jr:detailCell height="10">
+								<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+									<reportElement x="5" y="0" width="284" height="10" uuid="1d046846-aec2-4dc2-8209-0bbfa7da58d6">
+										<printWhenExpression><![CDATA[$V{Group1_COUNT} == 1]]></printWhenExpression>
+									</reportElement>
+									<textElement textAlignment="Left">
+										<font fontName="Arial" size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{DESCRICAO}]]></textFieldExpression>
+								</textField>
+								<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00%" isBlankWhenNull="true">
+									<reportElement x="289" y="0" width="59" height="10" uuid="4ececbee-05c3-4b87-a1cd-a28a9fd159da"/>
+									<textElement textAlignment="Right">
+										<font fontName="Arial" size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{PCT_SAIDA}.doubleValue() / 100]]></textFieldExpression>
+								</textField>
+								<textField textAdjust="StretchHeight" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+									<reportElement x="465" y="0" width="106" height="10" uuid="ebb89bbf-1dde-49b1-a8c0-52d96421eb71">
+										<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									</reportElement>
+									<textElement textAlignment="Right">
+										<font fontName="Arial" size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{VLR_SAIDA_CALC}]]></textFieldExpression>
+								</textField>
+								<textField textAdjust="StretchHeight" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+									<reportElement x="348" y="0" width="106" height="10" uuid="c849e6c4-01da-468f-ae03-ce8699009036">
+										<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									</reportElement>
+									<textElement textAlignment="Right">
+										<font fontName="Arial" size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{VLR_SAIDA_DOLAR}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:table>
+				</componentElement>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="12" y="424" width="571" height="70" uuid="02049553-c533-491f-a9e9-06e17733e106"/>
+				<componentElement>
+					<reportElement positionType="Float" x="0" y="12" width="571" height="12" uuid="6abe2ad1-2775-41f6-87d0-383479dbab81">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="DESCONTO_COMERCIAL"/>
+					</reportElement>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Q_8" uuid="bb1ffb4b-91bc-45fb-9583-c455f0bd4a73">
+							<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+							<datasetParameter name="ORACLE_REF_CURSOR">
+								<datasetParameterExpression><![CDATA[$P{ORACLE_REF_CURSOR}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="FIL_COD">
+								<datasetParameterExpression><![CDATA[$F{FIL_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="NEG_COD">
+								<datasetParameterExpression><![CDATA[$F{NEG_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="NDA_COD">
+								<datasetParameterExpression><![CDATA[$F{NDA_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="TAXA_FISCAL">
+								<datasetParameterExpression><![CDATA[$F{TAXA_FISCAL}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="TIPO_OPERACAO">
+								<datasetParameterExpression><![CDATA[$F{TIPO_OPERACAO}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+							<returnValue fromVariable="CS_DESCONTO_COMERCIAL" toVariable="CS_DESCONTO_COMERCIAL" calculation="Sum"/>
+						</datasetRun>
+						<jr:listContents height="12" width="571">
+							<frame>
+								<reportElement key="" positionType="Float" mode="Transparent" x="0" y="0" width="571" height="12" isRemoveLineWhenBlank="true" uuid="f04e67c0-ff62-4fd1-841f-798a9bc0386b"/>
+								<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+									<reportElement key="" positionType="Float" mode="Transparent" x="497" y="0" width="74" height="12" isRemoveLineWhenBlank="true" uuid="7a8a4137-84f9-4480-a862-6639488217d1"/>
+									<textElement textAlignment="Right">
+										<font fontName="Arial" size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{VALOR}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+								</textField>
+								<textField textAdjust="StretchHeight" pattern="" isBlankWhenNull="true">
+									<reportElement key="" positionType="Float" mode="Transparent" x="2" y="0" width="408" height="12" isRemoveLineWhenBlank="true" uuid="322e9092-19d9-4f00-8389-ad0794b961a3">
+										<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+									</reportElement>
+									<textElement textAlignment="Left">
+										<font fontName="Arial" size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{DESCRICAO}]]></textFieldExpression>
+								</textField>
+								<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+									<reportElement key="" positionType="Float" mode="Transparent" x="410" y="0" width="74" height="12" isRemoveLineWhenBlank="true" uuid="e133c3d6-421c-4227-83a0-b5becc57eaa1"/>
+									<textElement textAlignment="Right">
+										<font fontName="Arial" size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{VALOR_DOLAR}.setScale( 2, java.math.RoundingMode.HALF_UP)]]></textFieldExpression>
+								</textField>
+							</frame>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="571" height="12" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" backcolor="#1100AD" uuid="2bce0fb7-0b01-4481-bea2-ba7de9cd68a5">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<printWhenExpression><![CDATA[$V{COLUMN_NUMBER} == 1]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DESCONTO COMERCIAL]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" mode="Transparent" x="12" y="494" width="571" height="70" isRemoveLineWhenBlank="true" uuid="e47f6377-3890-449c-bfd5-ae02a2863632">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<printWhenExpression><![CDATA[($F{TIPO_OPERACAO}.equals( "CONTA E ORDEM") ? true: false)]]></printWhenExpression>
+				</reportElement>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="0" y="0" width="571" height="14" forecolor="#FFFFFF" backcolor="#1100AD" uuid="779f3c5f-ad7d-4eea-bb93-a54cb0a8a533">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["COMPOSIÇÃO DA NOTA FISCAL DE SERVIÇO"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="5" y="24" width="343" height="10" forecolor="#000000" uuid="19c5be3c-3614-4063-ae9c-6e98ad2582c2"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[CUSTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="5" y="34" width="343" height="10" forecolor="#000000" uuid="6192de86-8d83-49a1-aee6-0526442065b2"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALOR ANTECIPADO PELO CLIENTE (PRÉ-CÁLCULO)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="5" y="44" width="343" height="10" forecolor="#000000" uuid="9c3a3b5d-f02b-469d-b920-6d6d4eadac6f"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[SALDO]]></text>
+				</staticText>
+				<textField evaluationTime="Report" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="467" y="24" width="104" height="10" forecolor="#000000" uuid="d8f186c9-73c0-4f35-ae64-27b73cbfbb86">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[/*CF_CUSTO_FINAL*/
+($V{CS_TOTAL_SAIDAS} != null? $V{CS_TOTAL_SAIDAS}.doubleValue(): 0) +
+($V{CS_CF_AUX_CUSTO} != null? $V{CS_CF_AUX_CUSTO}.doubleValue(): 0)]]></textFieldExpression>
+				</textField>
+				<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="467" y="34" width="104" height="10" forecolor="#000000" uuid="cb703819-b0f2-4cbb-88db-1f58f8cfe7e9">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CF_CUSTO_ANTEC_CLIENTE}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="467" y="44" width="104" height="10" forecolor="#000000" uuid="0f295f51-6444-4ee7-9216-88da8ac7a6ae">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[/*CF_SALDO*/
+(($V{CS_TOTAL_SAIDAS} != null ? $V{CS_TOTAL_SAIDAS}.doubleValue():0) + 
+($V{CS_CF_AUX_CUSTO} != null ? $V{CS_CF_AUX_CUSTO}.doubleValue():0)
+-$F{CF_CUSTO_ANTEC_CLIENTE}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<componentElement>
+					<reportElement x="0" y="14" width="571" height="10" uuid="8cec2ac6-104a-4b93-8b48-66bd55d6a6e1">
+						<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="COMP_NOTA_SERVICO"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Q_9" uuid="5088f5bc-5653-4d6f-a403-dc2958935c86">
+							<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+							<datasetParameter name="ORACLE_REF_CURSOR">
+								<datasetParameterExpression><![CDATA[$P{ORACLE_REF_CURSOR}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="FIL_COD">
+								<datasetParameterExpression><![CDATA[$F{FIL_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="NEG_COD">
+								<datasetParameterExpression><![CDATA[$F{NEG_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="NDA_COD">
+								<datasetParameterExpression><![CDATA[$F{NDA_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="TAXA_FISCAL">
+								<datasetParameterExpression><![CDATA[$F{TAXA_FISCAL}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+							<returnValue fromVariable="CS_CF_AUX_CUSTO" toVariable="CS_CF_AUX_CUSTO" calculation="Sum"/>
+							<returnValue fromVariable="CS_NF_SERVICO" toVariable="CS_NF_SERVICO" calculation="Sum"/>
+						</datasetRun>
+						<jr:listContents height="10" width="571">
+							<textField textAdjust="StretchHeight" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="465" y="0" width="106" height="10" uuid="0374791f-11a2-40b3-8531-00198a27df9c">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{VALOR}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+							</textField>
+							<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+								<reportElement mode="Transparent" x="5" y="0" width="343" height="10" isRemoveLineWhenBlank="true" uuid="21c26fa2-17c2-4f53-ad80-ad50aa48a628"/>
+								<textElement textAlignment="Left">
+									<font fontName="Arial" size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DESCRICAO}]]></textFieldExpression>
+							</textField>
+							<textField textAdjust="StretchHeight" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="348" y="0" width="106" height="10" forecolor="#000000" uuid="20ebc36e-99ac-4dab-b1e7-f56e83039c8a">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{VALOR_DOLAR}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<textField evaluationTime="Report" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="348" y="24" width="106" height="10" forecolor="#000000" uuid="f00940e2-66a0-422f-bde0-92d50a6fa86b">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[/*CF_CUSTO_FINAL_DOLAR*/
+($F{TAXA_FISCAL}.doubleValue() != 0
+	? (($V{CS_TOTAL_SAIDAS} != null? $V{CS_TOTAL_SAIDAS}.doubleValue(): 0) +
+($V{CS_CF_AUX_CUSTO} != null? $V{CS_CF_AUX_CUSTO}.doubleValue(): 0)  ) / $F{TAXA_FISCAL}.doubleValue()
+	:0	
+)]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="348" y="34" width="106" height="10" forecolor="#000000" uuid="7f9f4845-d93e-47ea-ada6-3cdcf15e0664">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[/*CF_CUSTO_ANTEC_CLIENTE_DOLAR*/
+($F{TAXA_FISCAL}.doubleValue() != 0
+	? $F{CF_CUSTO_ANTEC_CLIENTE}.doubleValue() / $F{TAXA_FISCAL}.doubleValue()
+	:0	
+)]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="348" y="44" width="106" height="10" forecolor="#000000" uuid="98d64191-9d51-49f9-9ab4-d0c6e6f6a10f">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[/*CF_SALDO_DOLAR*/
+($F{TAXA_FISCAL}.doubleValue() != 0
+	? /*CF_SALDO*/
+	(($V{CS_TOTAL_SAIDAS} != null ? $V{CS_TOTAL_SAIDAS}.doubleValue():0) + 
+	($V{CS_CF_AUX_CUSTO} != null ? $V{CS_CF_AUX_CUSTO}.doubleValue():0)
+	-$F{CF_CUSTO_ANTEC_CLIENTE}.doubleValue())
+	/ $F{TAXA_FISCAL}.doubleValue()
+	:0	
+)]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" mode="Transparent" x="12" y="564" width="571" height="70" isRemoveLineWhenBlank="true" uuid="fc21eef5-ed83-458e-b59c-dc5cbb3917e9">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="571" height="14" forecolor="#FFFFFF" backcolor="#1100AD" uuid="ae48b449-24b6-4ff5-bfb7-439add6f48e2">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[APURAÇÃO DE CUSTOS PARA O CLIENTE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="54" width="195" height="10" uuid="9294e1fb-c558-4521-b667-c94a67c547a2"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[CRÉDITO DE IPI]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="14" width="195" height="10" uuid="49a69878-daa5-4735-9661-c309518c9264">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALOR TOTAL DA NF DE SAÍDA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="34" width="195" height="10" uuid="d6e3d8d9-a66e-4ed9-8f1d-aabcddcc612b"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[CRÉDITO DE PIS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="44" width="195" height="10" uuid="38248acf-c299-48b7-afe1-c78f29d3e1d8"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[CRÉDITO DE COFINS]]></text>
+				</staticText>
+				<frame>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="74" width="571" height="12" backcolor="#1100AD" uuid="c0afa4d5-0e44-4dd2-bf6c-fafb1ded6ee6">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<staticText>
+						<reportElement positionType="Float" x="5" y="0" width="286" height="12" forecolor="#FFFFFF" uuid="0beecef2-955e-4346-8225-ca15625cd4a3">
+							<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						</reportElement>
+						<textElement textAlignment="Left">
+							<font fontName="Arial" size="7" isBold="true"/>
+						</textElement>
+						<text><![CDATA[CUSTO LÍQUIDO]]></text>
+					</staticText>
+				</frame>
+				<componentElement>
+					<reportElement x="348" y="14" width="223" height="72" uuid="56fa4b3d-bd56-4f85-ae2e-26a498795309">
+						<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="APURACAO_CUSTO_CLIENTE"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Q_7" uuid="53948bb5-ae5e-4692-b0af-57cde244fb50">
+							<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+							<datasetParameter name="FIL_COD">
+								<datasetParameterExpression><![CDATA[$F{FIL_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="PRI_VLD_TIPO">
+								<datasetParameterExpression><![CDATA[$F{PRI_VLD_TIPO}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="ORACLE_REF_CURSOR">
+								<datasetParameterExpression><![CDATA[$P{ORACLE_REF_CURSOR}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="NEG_COD">
+								<datasetParameterExpression><![CDATA[$F{NEG_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="NDA_COD">
+								<datasetParameterExpression><![CDATA[$F{NDA_COD}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="TAXA_FISCAL">
+								<datasetParameterExpression><![CDATA[$F{TAXA_FISCAL}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:listContents height="72" width="223">
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="117" y="0" width="106" height="10" uuid="43e63642-448b-4856-a7ae-ed7ba57fd455"/>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CF_VALOR_NF_SAIDA}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="117" y="20" width="106" height="10" uuid="db2790eb-062a-4f0c-a614-1237e1218d88"/>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PIS_NAC}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="117" y="30" width="106" height="10" uuid="7c3de5b6-acb9-4120-8249-daccb6977653">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{COFINS_NAC}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="117" y="40" width="106" height="10" uuid="44c87cc9-062b-46f1-adf5-c2078f6498dd">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CREDITO_IPI}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="117" y="50" width="106" height="10" uuid="a9713a25-31c6-47e5-8ad8-d38f6475d154">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{DESCONTO}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="0" y="50" width="106" height="10" uuid="e5524bd4-904b-462c-abdd-665e208dafd0">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($P{TAXA_FISCAL} != null && $P{TAXA_FISCAL}.doubleValue() != 0
+	?$F{DESCONTO}.doubleValue() / $P{TAXA_FISCAL}.doubleValue() 
+	:0
+)]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="0" y="30" width="106" height="10" uuid="e7f72232-4347-4be0-9658-68a9ac4a7f35">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($P{TAXA_FISCAL} != null && $P{TAXA_FISCAL}.doubleValue() != 0
+	?$F{COFINS_NAC}.doubleValue() / $P{TAXA_FISCAL}.doubleValue() 
+	:0
+)]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="0" y="40" width="106" height="10" uuid="ee3dcbe2-6734-4f8d-89c4-ea323e9103e0">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($P{TAXA_FISCAL} != null && $P{TAXA_FISCAL}.doubleValue() != 0
+	?$F{CREDITO_IPI}.doubleValue() / $P{TAXA_FISCAL}.doubleValue() 
+	:0
+)]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="106" height="10" uuid="47fb8b75-b3fb-4abe-951e-b7664022148b"/>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($P{TAXA_FISCAL} != null && $P{TAXA_FISCAL}.doubleValue() != 0
+	?$F{CF_VALOR_NF_SAIDA}.doubleValue() / $P{TAXA_FISCAL}.doubleValue() 
+	:0
+)]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="0" y="20" width="106" height="10" uuid="dd678531-f441-4040-a2a9-92455acfaad9"/>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($P{TAXA_FISCAL} != null && $P{TAXA_FISCAL}.doubleValue() != 0
+	?$F{PIS_NAC}.doubleValue() / $P{TAXA_FISCAL}.doubleValue() 
+	:0
+)]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="0" y="10" width="106" height="10" uuid="ddcd187d-ff38-4c06-9eb0-1d395f7d58e4"/>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($P{TAXA_FISCAL} != null && $P{TAXA_FISCAL}.doubleValue() != 0
+	?$F{CREDITO_ICMS}.doubleValue() / $P{TAXA_FISCAL}.doubleValue() 
+	:0
+)]]></textFieldExpression>
+							</textField>
+							<textField pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="117" y="10" width="106" height="10" uuid="c8064a2e-e66f-4192-b50a-9365de64f9d8"/>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="false"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CREDITO_ICMS}.setScale( 2, java.math.RoundingMode.HALF_UP )]]></textFieldExpression>
+							</textField>
+							<textField evaluationTime="Report" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="117" y="60" width="106" height="12" forecolor="#FFFFFF" uuid="e913fd2f-20fc-492b-8c04-6ebb32b992c6">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($F{CF_VALOR_NF_SAIDA}.doubleValue() - 
+	($F{CREDITO_IPI}.doubleValue() + $F{CREDITO_ICMS}.doubleValue() + $F{PIS_NAC}.doubleValue() + $F{COFINS_NAC}.doubleValue())
+)]]></textFieldExpression>
+							</textField>
+							<textField evaluationTime="Report" pattern="###,###,###,###,##0.00;(###,###,###,###,##0.00)" isBlankWhenNull="true">
+								<reportElement x="0" y="60" width="106" height="12" forecolor="#FFFFFF" uuid="8a4abd46-8588-4426-8c9c-02f8b76a1345">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font fontName="Arial" size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($F{CF_VALOR_NF_SAIDA}.doubleValue() - 
+	($F{CREDITO_IPI}.doubleValue() + $F{CREDITO_ICMS}.doubleValue() + $F{PIS_NAC}.doubleValue() + $F{COFINS_NAC}.doubleValue())
+) / $P{TAXA_FISCAL}.doubleValue()]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<staticText>
+					<reportElement x="5" y="64" width="195" height="10" uuid="4ce69d6e-a9ee-478c-a811-acaf52efa52b"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[DESCONTO COMERCIAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="5" y="24" width="195" height="10" uuid="ca9bd98b-5531-45de-976d-2ca9a42e0156"/>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" size="7"/>
+					</textElement>
+					<text><![CDATA[CRÉDITO DE ICMS]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="12" y="651" width="571" height="23" isRemoveLineWhenBlank="true" uuid="6e36471b-4f36-4e5f-8c42-e67932e0496c">
+					<printWhenExpression><![CDATA[IF($P{XCCO_COD} != 0, true, false)]]></printWhenExpression>
+				</reportElement>
+				<componentElement>
+					<reportElement positionType="Float" x="0" y="12" width="571" height="12" isRemoveLineWhenBlank="true" uuid="29f58c81-71ee-42f6-a23e-4ad8609e1371">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="BANCO"/>
+					</reportElement>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="Q_4" uuid="c033705e-ed4e-48b2-9e1d-c8f3472381ca">
+							<parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+							<datasetParameter name="ORACLE_REF_CURSOR">
+								<datasetParameterExpression><![CDATA[$P{ORACLE_REF_CURSOR}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:listContents height="12" width="571">
+							<frame>
+								<reportElement key="" positionType="Float" mode="Transparent" x="0" y="0" width="571" height="12" isRemoveLineWhenBlank="true" uuid="6cd69bce-d558-409c-943d-2b2cc37569d5"/>
+								<textField textAdjust="StretchHeight" pattern="" isBlankWhenNull="true">
+									<reportElement key="" positionType="Float" mode="Transparent" x="2" y="0" width="569" height="12" isRemoveLineWhenBlank="true" uuid="74607b4c-9714-41c8-8401-44aef06021a6">
+										<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+									</reportElement>
+									<textElement textAlignment="Left">
+										<font fontName="Arial" size="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{BANCO_DEPOSITO}]]></textFieldExpression>
+								</textField>
+							</frame>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="571" height="12" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" backcolor="#1100AD" uuid="6b65d0f5-5ed2-4453-9967-3d0d6ad63e8d">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<printWhenExpression><![CDATA[$V{COLUMN_NUMBER} == 1]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DADOS BANCÁRIOS PARA DEPÓSITO]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>
