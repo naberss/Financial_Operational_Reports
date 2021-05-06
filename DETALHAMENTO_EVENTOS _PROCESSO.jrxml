@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RP_FIN_093" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b4d5091-38a2-43cf-85e4-804b8c370f1e">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CNXD5.xml"/>
+	<subDataset name="G_EVENTO" uuid="4c1f5756-dab5-4a84-bfb0-e420b9996250">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CNXD5.xml"/>
+		<parameter name="FIL_COD" class="java.math.BigDecimal"/>
+		<parameter name="PRI_COD" class="java.math.BigDecimal"/>
+		<queryString language="plsql">
+			<![CDATA[SELECT   /*+CHOOSE*/
+         IMP_EVENTOS_PROCESSO.FIL_COD,
+         IMP_EVENTOS_PROCESSO.PRI_COD,
+         IMP_ENVENTOS_GRUPO.IEG_DES_NOME,
+         IMP_TIPO_EVENTO.TEV_NUM_ORDEM,
+         IMP_EVENTOS_PROCESSO.TEV_COD,
+         TO_DATE (IMP_EVENTOS_PROCESSO.PRV_TIM_REALIZACAO, 'DD/MM/RRRR') AS PRV_DTA_EVENTO,
+         (CASE
+            WHEN IMP_TIPO_EVENTO.TEV_VLD_IMPR_DESC = 1 THEN IMP_TIPO_EVENTO.TEV_ESP_DESCRICAO
+            ELSE NULL
+          END
+         ) TEV_ESP_DESCRICAO,
+         (CASE
+            WHEN IMP_TIPO_EVENTO.TEV_VLD_IMPR_DESC = 1 THEN NULL
+            ELSE IMP_EVENTOS_PROCESSO.PRV_MEM_DESCRICAO
+          END
+         ) DESCRICAO_USR
+    FROM IMP_EVENTOS_PROCESSO,
+         IMP_TIPO_EVENTO,
+         IMP_ENVENTOS_GRUPO
+   WHERE IMP_EVENTOS_PROCESSO.TEV_COD = IMP_TIPO_EVENTO.TEV_COD
+     AND IMP_TIPO_EVENTO.IEG_COD = IMP_ENVENTOS_GRUPO.IEG_COD(+)
+     AND IMP_EVENTOS_PROCESSO.FIL_COD = $P{FIL_COD}
+     AND IMP_EVENTOS_PROCESSO.PRI_COD = $P{PRI_COD}
+ORDER BY 1,
+                   2,
+                   3,
+                   4]]>
+		</queryString>
+		<field name="FIL_COD" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="FIL_COD"/>
+			<property name="com.jaspersoft.studio.field.label" value="FIL_COD"/>
+		</field>
+		<field name="PRI_COD" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="PRI_COD"/>
+			<property name="com.jaspersoft.studio.field.label" value="PRI_COD"/>
+		</field>
+		<field name="IEG_DES_NOME" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="IEG_DES_NOME"/>
+			<property name="com.jaspersoft.studio.field.label" value="IEG_DES_NOME"/>
+		</field>
+		<field name="TEV_NUM_ORDEM" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="TEV_NUM_ORDEM"/>
+			<property name="com.jaspersoft.studio.field.label" value="TEV_NUM_ORDEM"/>
+		</field>
+		<field name="TEV_COD" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="TEV_COD"/>
+			<property name="com.jaspersoft.studio.field.label" value="TEV_COD"/>
+		</field>
+		<field name="PRV_DTA_EVENTO" class="java.sql.Timestamp">
+			<property name="com.jaspersoft.studio.field.name" value="PRV_DTA_EVENTO"/>
+			<property name="com.jaspersoft.studio.field.label" value="PRV_DTA_EVENTO"/>
+		</field>
+		<field name="TEV_ESP_DESCRICAO" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="TEV_ESP_DESCRICAO"/>
+			<property name="com.jaspersoft.studio.field.label" value="TEV_ESP_DESCRICAO"/>
+		</field>
+		<field name="DESCRICAO_USR" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="DESCRICAO_USR"/>
+			<property name="com.jaspersoft.studio.field.label" value="DESCRICAO_USR"/>
+		</field>
+	</subDataset>
+	<parameter name="XSITUACAO" class="java.lang.Long"/>
+	<parameter name="XDATAF" class="java.util.Date"/>
+	<parameter name="XDATAI" class="java.util.Date"/>
+	<parameter name="XPRI_VLD_IMPEXP" class="java.lang.Long"/>
+	<parameter name="XPRI_COD" class="java.lang.Long"/>
+	<parameter name="XFIL_COD" class="java.lang.Long"/>
+	<queryString language="plsql">
+		<![CDATA[SELECT   ABC.FIL_COD,
+         ABC.PRI_COD,
+         ABC.PRI_ESP_REFCLIENTE,
+         ABC.PES_COD,
+         CMN_DADOS_PESSOAS.DPE_NOM_PESSOA,
+         SUM (ABC.SALDO) AS SALDO
+    FROM (SELECT IMP_PROCESSO.FIL_COD,
+                 IMP_PROCESSO.PRI_COD,
+                 IMP_PROCESSO.PRI_ESP_REFCLIENTE,
+                 IMP_PROCESSO.PES_COD,
+                 IMP_PROCESSO.DPE_COD_SEQ,
+                 DECODE (FIN_TITULO.DOC_TIP, 1, FIN_TITULO.TIT_MNY_VALOR, FIN_TITULO.TIT_MNY_VALOR * (-1) ) AS SALDO
+            FROM IMP_PROCESSO,
+                 FIN_DOC,
+                 FIN_TITULO
+           WHERE FIN_DOC.FIL_COD = IMP_PROCESSO.FIL_COD
+             AND FIN_DOC.PRI_COD = IMP_PROCESSO.PRI_COD
+             AND FIN_DOC.FIL_COD = FIN_TITULO.FIL_COD
+             AND FIN_DOC.DOC_TIP = FIN_TITULO.DOC_TIP
+             AND FIN_DOC.DOC_COD = FIN_TITULO.DOC_COD
+             --AND   IMP_PROCESSO.PRI_VLD_IMPEXP IN (2,9)
+             AND (   FIN_DOC.DOC_DTA_FINALIZACAO IS NOT NULL
+                  OR FIN_DOC.DOC_VLD_PREVISAO = 1)
+             AND FIN_DOC.DOC_DTA_CANCELAMENTO IS NULL
+             AND FIN_DOC.DOC_DTA_ESTORNO IS NULL
+             AND FIN_TITULO.TIT_VLD_STATUS = 1
+             AND (FIN_DOC.FIL_COD = $P{XFIL_COD} )
+             AND (   FIN_DOC.PRI_COD = $P{XPRI_COD}                                                                    
+                  OR $P{XPRI_COD}  IS NULL)
+             AND (   IMP_PROCESSO.PRI_VLD_IMPEXP = $P{XPRI_VLD_IMPEXP}                                                 
+                  OR $P{XPRI_VLD_IMPEXP}  IS NULL)
+             AND (   FIN_DOC.DOC_DTA_EMISSAO >= $P{XDATAI}                                                             
+                  OR $P{XDATAI}  IS NULL)
+             AND (   FIN_DOC.DOC_DTA_EMISSAO <= $P{XDATAF}                                                             
+                  OR $P{XDATAF}  IS NULL)
+             AND (    (    IMP_PROCESSO.PRI_DTA_FECHAMENTO IS NULL
+                       AND $P{XSITUACAO}  = 1)
+                  OR (    IMP_PROCESSO.PRI_DTA_FECHAMENTO IS NOT NULL
+                      AND $P{XSITUACAO}  = 2)
+                  OR ($P{XSITUACAO}  = 0)
+                 )
+                 AND ROWNUM <= 250
+          UNION ALL
+          SELECT IMP_PROCESSO.FIL_COD,
+                 IMP_PROCESSO.PRI_COD,
+                 IMP_PROCESSO.PRI_ESP_REFCLIENTE,
+                 IMP_PROCESSO.PES_COD,
+                 IMP_PROCESSO.DPE_COD_SEQ,
+                 DECODE (FIN_TITULO.DOC_TIP,
+                         1, FCN_CALCULA_TITULO (SYSDATE,
+                                                FIN_TITULO.FIL_COD,
+                                                FIN_TITULO.DOC_TIP,
+                                                FIN_TITULO.DOC_COD,
+                                                FIN_TITULO.TIT_COD,
+                                                1
+                                               ),
+                           FCN_CALCULA_TITULO (SYSDATE,
+                                               FIN_TITULO.FIL_COD,
+                                               FIN_TITULO.DOC_TIP,
+                                               FIN_TITULO.DOC_COD,
+                                               FIN_TITULO.TIT_COD,
+                                               1
+                                              )
+                         * (-1)
+                        ) AS SALDO
+            FROM IMP_PROCESSO,
+                 FIN_DOC,
+                 FIN_TITULO
+           WHERE FIN_DOC.FIL_COD = IMP_PROCESSO.FIL_COD
+             AND FIN_DOC.PRI_COD = IMP_PROCESSO.PRI_COD
+             AND FIN_DOC.FIL_COD = FIN_TITULO.FIL_COD
+             AND FIN_DOC.DOC_TIP = FIN_TITULO.DOC_TIP
+             AND FIN_DOC.DOC_COD = FIN_TITULO.DOC_COD
+             AND FCN_CALCULA_TITULO (SYSDATE,
+                                     FIN_TITULO.FIL_COD,
+                                     FIN_TITULO.DOC_TIP,
+                                     FIN_TITULO.DOC_COD,
+                                     FIN_TITULO.TIT_COD,
+                                     1
+                                    ) > 0
+             AND (   FIN_DOC.DOC_DTA_FINALIZACAO IS NOT NULL
+                  OR FIN_DOC.DOC_VLD_PREVISAO = 1)
+             AND FIN_DOC.DOC_DTA_CANCELAMENTO IS NULL
+             AND FIN_DOC.DOC_DTA_ESTORNO IS NULL
+             AND FIN_TITULO.TIT_VLD_STATUS = 1
+             AND (FIN_DOC.FIL_COD = $P{XFIL_COD})
+             AND (   FIN_DOC.PRI_COD = $P{XPRI_COD}
+                  OR $P{XPRI_COD} IS NULL)
+             AND (   IMP_PROCESSO.PRI_VLD_IMPEXP = $P{XPRI_VLD_IMPEXP}
+                  OR $P{XPRI_VLD_IMPEXP} IS NULL)
+             AND (   FIN_DOC.DOC_DTA_EMISSAO >= $P{XDATAI}
+                  OR $P{XDATAI} IS NULL)
+             AND (   FIN_DOC.DOC_DTA_EMISSAO <= $P{XDATAF}
+                  OR $P{XDATAF} IS NULL)
+             AND (    (    IMP_PROCESSO.PRI_DTA_FECHAMENTO IS NULL
+                       AND $P{XSITUACAO} = 1)
+                  OR (    IMP_PROCESSO.PRI_DTA_FECHAMENTO IS NOT NULL
+                      AND $P{XSITUACAO} = 2)
+                  OR ($P{XSITUACAO} = 0)
+                 )
+          UNION ALL
+          SELECT IMP_PROCESSO.FIL_COD,
+                 IMP_PROCESSO.PRI_COD,
+                 IMP_PROCESSO.PRI_ESP_REFCLIENTE,
+                 IMP_PROCESSO.PES_COD,
+                 IMP_PROCESSO.DPE_COD_SEQ,
+                 DECODE (FIN_TITULO.DOC_TIP,
+                         1, FCN_CALCULA_TITULO (SYSDATE,
+                                                FIN_TITULO.FIL_COD,
+                                                FIN_TITULO.DOC_TIP,
+                                                FIN_TITULO.DOC_COD,
+                                                FIN_TITULO.TIT_COD,
+                                                2
+                                               ),
+                           FCN_CALCULA_TITULO (SYSDATE,
+                                               FIN_TITULO.FIL_COD,
+                                               FIN_TITULO.DOC_TIP,
+                                               FIN_TITULO.DOC_COD,
+                                               FIN_TITULO.TIT_COD,
+                                               2
+                                              )
+                         * (-1)
+                        ) AS SALDO
+            FROM IMP_PROCESSO,
+                 FIN_DOC,
+                 FIN_TITULO
+           WHERE FIN_DOC.FIL_COD = IMP_PROCESSO.FIL_COD
+             AND FIN_DOC.PRI_COD = IMP_PROCESSO.PRI_COD
+             AND FIN_DOC.FIL_COD = FIN_TITULO.FIL_COD
+             AND FIN_DOC.DOC_TIP = FIN_TITULO.DOC_TIP
+             AND FIN_DOC.DOC_COD = FIN_TITULO.DOC_COD
+             AND FCN_CALCULA_TITULO (SYSDATE,
+                                     FIN_TITULO.FIL_COD,
+                                     FIN_TITULO.DOC_TIP,
+                                     FIN_TITULO.DOC_COD,
+                                     FIN_TITULO.TIT_COD,
+                                     2
+                                    ) > 0
+             AND (   FIN_DOC.DOC_DTA_FINALIZACAO IS NOT NULL
+                  OR FIN_DOC.DOC_VLD_PREVISAO = 1)
+             AND FIN_DOC.DOC_DTA_CANCELAMENTO IS NULL
+             AND FIN_DOC.DOC_DTA_ESTORNO IS NULL
+             AND FIN_TITULO.TIT_VLD_STATUS = 1
+             AND (FIN_DOC.FIL_COD = $P{XFIL_COD})
+             AND (   FIN_DOC.PRI_COD = $P{XPRI_COD}
+                  OR $P{XPRI_COD} IS NULL)
+             AND (   IMP_PROCESSO.PRI_VLD_IMPEXP = $P{XPRI_VLD_IMPEXP}
+                  OR $P{XPRI_VLD_IMPEXP} IS NULL)
+             AND (   FIN_DOC.DOC_DTA_EMISSAO >= $P{XDATAI}
+                  OR $P{XDATAI} IS NULL)
+             AND (   FIN_DOC.DOC_DTA_EMISSAO <= $P{XDATAF}
+                  OR $P{XDATAF} IS NULL)
+             AND (    (    IMP_PROCESSO.PRI_DTA_FECHAMENTO IS NULL
+                       AND $P{XSITUACAO} = 1)
+                  OR (    IMP_PROCESSO.PRI_DTA_FECHAMENTO IS NOT NULL
+                      AND $P{XSITUACAO} = 2)
+                  OR ($P{XSITUACAO} = 0)
+                 )
+          UNION ALL
+          SELECT IMP_PROCESSO.FIL_COD,
+                 IMP_PROCESSO.PRI_COD,
+                 IMP_PROCESSO.PRI_ESP_REFCLIENTE,
+                 IMP_PROCESSO.PES_COD,
+                 IMP_PROCESSO.DPE_COD_SEQ,
+                 DECODE (FIN_DOC.DOC_TIP,
+                         2, COM_DOC_PRODTRIB.DTR_MNY_VALORMN,
+                         COM_DOC_PRODTRIB.DTR_MNY_VALORMN * (-1)
+                        ) AS SALDO
+            FROM IMP_PROCESSO,
+                 FIN_DOC,
+                 COM_DOC_PRODTRIB,
+                 GER_FILIAL
+           WHERE FIN_DOC.FIL_COD = IMP_PROCESSO.FIL_COD
+             AND FIN_DOC.PRI_COD = IMP_PROCESSO.PRI_COD
+             AND FIN_DOC.FIL_COD = GER_FILIAL.FIL_COD
+             AND FIN_DOC.FIL_COD = COM_DOC_PRODTRIB.FIL_COD
+             AND FIN_DOC.DOC_TIP = COM_DOC_PRODTRIB.DOC_TIP
+             AND FIN_DOC.DOC_COD = COM_DOC_PRODTRIB.DOC_COD
+             AND (   COM_DOC_PRODTRIB.IMP_COD = GER_FILIAL.FIL_IMP_COD_VLR_ISS
+                  OR COM_DOC_PRODTRIB.IMP_COD = GER_FILIAL.FIL_IMP_COD_VLRICMS
+                  OR COM_DOC_PRODTRIB.IMP_COD = GER_FILIAL.FIL_IMP_COD_PIS
+                  OR COM_DOC_PRODTRIB.IMP_COD = GER_FILIAL.FIL_IMP_COD_COFINS
+                  OR COM_DOC_PRODTRIB.IMP_COD = GER_FILIAL.FIL_IMP_COD_VLRIPI
+                 )
+             AND NVL (COM_DOC_PRODTRIB.DTR_MNY_VALORMN, 0) > 0
+             AND (   FIN_DOC.DOC_DTA_FINALIZACAO IS NOT NULL
+                  OR FIN_DOC.DOC_VLD_PREVISAO = 1)
+             AND FIN_DOC.DOC_DTA_CANCELAMENTO IS NULL
+             AND FIN_DOC.DOC_DTA_ESTORNO IS NULL
+             AND (FIN_DOC.FIL_COD = $P{XFIL_COD})
+             AND (   FIN_DOC.PRI_COD = $P{XPRI_COD}
+                  OR $P{XPRI_COD} IS NULL)
+             AND (   IMP_PROCESSO.PRI_VLD_IMPEXP = $P{XPRI_VLD_IMPEXP}
+                  OR $P{XPRI_VLD_IMPEXP} IS NULL)
+             AND (   FIN_DOC.DOC_DTA_EMISSAO >= $P{XDATAI}
+                  OR $P{XDATAI} IS NULL)
+             AND (   FIN_DOC.DOC_DTA_EMISSAO <= $P{XDATAF}
+                  OR $P{XDATAF} IS NULL)
+             AND (    (    IMP_PROCESSO.PRI_DTA_FECHAMENTO IS NULL
+                       AND $P{XSITUACAO} = 1)
+                  OR (    IMP_PROCESSO.PRI_DTA_FECHAMENTO IS NOT NULL
+                      AND $P{XSITUACAO} = 2)
+                  OR ($P{XSITUACAO} = 0)
+                 )
+          UNION ALL
+          SELECT IMP_PROCESSO.FIL_COD,
+                 IMP_PROCESSO.PRI_COD,
+                 IMP_PROCESSO.PRI_ESP_REFCLIENTE,
+                 IMP_PROCESSO.PES_COD,
+                 IMP_PROCESSO.DPE_COD_SEQ,
+                 (FCN_DIVIDIR ( (FIN_DOC.DOC_MNY_VALOR * 2.2), 100) * (-1) ) AS SALDO
+            FROM IMP_PROCESSO,
+                 FIN_DOC
+           WHERE FIN_DOC.FIL_COD = IMP_PROCESSO.FIL_COD
+             AND FIN_DOC.PRI_COD = IMP_PROCESSO.PRI_COD
+             --AND   IMP_PROCESSO.PRI_VLD_IMPEXP IN (2,9)
+             AND FIN_DOC.DOC_TIP = 1
+             AND (   FIN_DOC.DOC_DTA_FINALIZACAO IS NOT NULL
+                  OR FIN_DOC.DOC_VLD_PREVISAO = 1)
+             AND FIN_DOC.DOC_DTA_CANCELAMENTO IS NULL
+             AND FIN_DOC.DOC_DTA_ESTORNO IS NULL
+             AND (FIN_DOC.FIL_COD = $P{XFIL_COD})
+             AND (   FIN_DOC.PRI_COD = $P{XPRI_COD}
+                  OR $P{XPRI_COD} IS NULL)
+             AND (   IMP_PROCESSO.PRI_VLD_IMPEXP = $P{XPRI_VLD_IMPEXP}
+                  OR $P{XPRI_VLD_IMPEXP} IS NULL)
+             AND (   FIN_DOC.DOC_DTA_EMISSAO >= $P{XDATAI}
+                  OR $P{XDATAI} IS NULL)
+             AND (   FIN_DOC.DOC_DTA_EMISSAO <= $P{XDATAF}
+                  OR $P{XDATAF} IS NULL)
+             AND (    (    IMP_PROCESSO.PRI_DTA_FECHAMENTO IS NULL
+                       AND $P{XSITUACAO} = 1)
+                  OR (    IMP_PROCESSO.PRI_DTA_FECHAMENTO IS NOT NULL
+                      AND $P{XSITUACAO} = 2)
+                  OR ($P{XSITUACAO} = 0)
+                 ) ) ABC,
+         CMN_DADOS_PESSOAS
+   WHERE ABC.PES_COD = CMN_DADOS_PESSOAS.PES_COD(+)
+     AND ABC.DPE_COD_SEQ = CMN_DADOS_PESSOAS.DPE_COD_SEQ(+)
+GROUP BY ABC.FIL_COD,
+         ABC.PRI_COD,
+         ABC.PRI_ESP_REFCLIENTE,
+         ABC.PES_COD,
+         CMN_DADOS_PESSOAS.DPE_NOM_PESSOA]]>
+	</queryString>
+	<field name="FIL_COD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="FIL_COD"/>
+		<property name="com.jaspersoft.studio.field.label" value="FIL_COD"/>
+	</field>
+	<field name="PRI_COD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PRI_COD"/>
+		<property name="com.jaspersoft.studio.field.label" value="PRI_COD"/>
+	</field>
+	<field name="PRI_ESP_REFCLIENTE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="PRI_ESP_REFCLIENTE"/>
+		<property name="com.jaspersoft.studio.field.label" value="PRI_ESP_REFCLIENTE"/>
+	</field>
+	<field name="PES_COD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PES_COD"/>
+		<property name="com.jaspersoft.studio.field.label" value="PES_COD"/>
+	</field>
+	<field name="DPE_NOM_PESSOA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DPE_NOM_PESSOA"/>
+		<property name="com.jaspersoft.studio.field.label" value="DPE_NOM_PESSOA"/>
+	</field>
+	<field name="SALDO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SALDO"/>
+		<property name="com.jaspersoft.studio.field.label" value="SALDO"/>
+	</field>
+	<variable name="TOTAL_SALDO" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SALDO}]]></variableExpression>
+	</variable>
+	<group name="PROCESSO_FILIAL">
+		<groupExpression><![CDATA[$F{PRI_COD}+""+$F{FIL_COD}]]></groupExpression>
+		<groupFooter>
+			<band height="46">
+				<frame>
+					<reportElement x="0" y="10" width="430" height="24" uuid="4707e8b6-a795-404e-b4f6-ad4e5af83930"/>
+					<componentElement>
+						<reportElement positionType="Float" x="0" y="12" width="430" height="12" uuid="f5832fa8-585a-4301-b9cc-b08b67adb0de"/>
+						<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+							<datasetRun subDataset="G_EVENTO" uuid="2d25ab46-c59e-438e-a6e8-b93f2bc58341">
+								<datasetParameter name="FIL_COD">
+									<datasetParameterExpression><![CDATA[$F{FIL_COD}]]></datasetParameterExpression>
+								</datasetParameter>
+								<datasetParameter name="PRI_COD">
+									<datasetParameterExpression><![CDATA[$F{PRI_COD}]]></datasetParameterExpression>
+								</datasetParameter>
+								<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+							</datasetRun>
+							<jr:listContents height="12" width="430">
+								<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+									<reportElement x="0" y="0" width="361" height="12" uuid="553833ab-0013-4249-84d6-50e43455d0e4">
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<box leftPadding="4"/>
+									<textElement textAlignment="Left" verticalAlignment="Middle">
+										<font size="7" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{TEV_ESP_DESCRICAO}]]></textFieldExpression>
+								</textField>
+								<textField textAdjust="StretchHeight" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+									<reportElement x="361" y="0" width="69" height="12" uuid="0fd8a25f-2701-4e12-a559-c14ecc95d8f5">
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font size="7" isBold="false"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{PRV_DTA_EVENTO}]]></textFieldExpression>
+								</textField>
+							</jr:listContents>
+						</jr:list>
+					</componentElement>
+					<staticText>
+						<reportElement mode="Opaque" x="0" y="0" width="430" height="12" backcolor="#CCCCCC" uuid="4eb2d5e7-b224-4ed2-8b0d-77e4280ff9b7">
+							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						</reportElement>
+						<box>
+							<pen lineWidth="0.5"/>
+							<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font size="9" isBold="true"/>
+						</textElement>
+						<text><![CDATA[Eventos do Processo]]></text>
+					</staticText>
+				</frame>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="38" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="20" backcolor="#CCCCCC" uuid="aafc2ef0-7212-4daa-8dee-036ebf4de328"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<staticText>
+					<reportElement x="0" y="0" width="50" height="20" uuid="eee2ced1-2f28-42b8-bd6e-88fa2668b320"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Processo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="170" y="0" width="285" height="20" uuid="eb135d7d-f480-4f17-95d2-8985ded48881">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cliente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="455" y="0" width="100" height="20" uuid="986cac1d-90f1-4d44-9404-d093a21ff660"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Saldo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="50" y="0" width="70" height="20" uuid="159b6eac-b122-446a-be31-aee9cc050bbe"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ref. Processo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="120" y="0" width="50" height="20" uuid="14923ac5-1019-4f5e-840b-732778ef14c8"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cod. Cliente]]></text>
+				</staticText>
+			</frame>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="20" width="50" height="18" uuid="4eaab906-2aef-461a-8f4c-0a399c15eeea">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRI_COD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="50" y="20" width="70" height="18" uuid="d67c7161-0c85-445a-8857-5500b1ff9e4d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRI_ESP_REFCLIENTE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="120" y="20" width="50" height="18" uuid="69b91524-76a7-4a82-8043-139e8f3b8021">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PES_COD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="170" y="20" width="285" height="18" uuid="8a8bc408-c408-4767-860d-be0ac921f99d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DPE_NOM_PESSOA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+				<reportElement x="455" y="20" width="100" height="18" uuid="331dbdbd-2cbe-481b-93bd-2aa51620b47b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SALDO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="26">
+			<frame>
+				<reportElement positionType="Float" x="346" y="6" width="214" height="20" uuid="5b9e0d52-8a5f-44f2-b74f-39efcf2f4702"/>
+				<staticText>
+					<reportElement x="0" y="0" width="114" height="20" uuid="b9a5a01c-e2f1-46ca-9f12-cb3e2e24638d"/>
+					<box rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Saldo Total:]]></text>
+				</staticText>
+				<textField pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement x="114" y="0" width="100" height="20" uuid="3876d2d6-aed2-477c-809c-f7ad806ca6f0"/>
+					<box rightPadding="4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TOTAL_SALDO}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</summary>
+</jasperReport>
