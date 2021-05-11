@@ -1,0 +1,1633 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RP_COM_586" pageWidth="3660" pageHeight="842" orientation="Landscape" columnWidth="3620" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="14b62d65-5b7e-46ed-aa33-49e06277c35c">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CNXD5.xml"/>
+	<parameter name="PRI_COD" class="java.lang.Long"/>
+	<parameter name="XCDI_COD" class="java.lang.Long"/>
+	<parameter name="FIL_COD" class="java.lang.Long"/>
+	<parameter name="XPRI_ESP_REFCLIENTE" class="java.lang.String"/>
+	<parameter name="XREPORT_DATA" class="java.util.Map" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new java.util.HashMap()]]></defaultValueExpression>
+	</parameter>
+	<queryString language="plsql">
+		<![CDATA[SELECT COM_DOC_PRODUTOS.CDI_COD AS SEQ_ITEM,
+       COM_DOC_PRODUTOS.ADI_COD AS ADIC,
+       COM_PRODUTOS.TEC_ESP_COD_SEQ AS NCM,
+       COM_PRODUTOS.PRD_ESP_COD_EXPORT AS PART_NUMBER,
+       COM_PRODUTOS.PRD_LNG_COMPLEMENTO AS DESCR,
+       COM_DOC_PRODUTOS.DPR_PRE_VALORUN AS VLR_UN,
+       NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                         YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                         YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                         YFIS_COD         => 1,
+                         YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                         YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                         YIMP_COD         => GER_FILIAL.IMP_COD_FOB,
+                         YOP              => 'IMP_MN'
+                        ),
+            0
+           ) AS FOB,
+       COM_DOC_PRODUTOS.DPR_QTD_QUANTIDADE AS QTD,
+       NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                         YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                         YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                         YFIS_COD         => 1,
+                         YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                         YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                         YIMP_COD         => GER_FILIAL.IMP_COD_FRETE,
+                         YOP              => 'IMP_MN'
+                        ),
+            0
+           ) AS FRETE,
+       NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                         YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                         YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                         YFIS_COD         => 1,
+                         YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                         YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                         YIMP_COD         => GER_FILIAL.IMP_COD_SEGURO,
+                         YOP              => 'IMP_MN'
+                        ),
+            0
+           ) AS SEGURO,
+       NVL ( (SELECT CDP.DTR_MNY_VALORMN
+                FROM COM_DOC_PRODTRIB CDP,
+                     CMN_IMPOSTOS
+               WHERE CDP.FIL_COD = COM_DOC_PRODUTOS.FIL_COD
+                 AND CDP.DOC_COD = COM_DOC_PRODUTOS.DOC_COD
+                 AND CDP.DOC_TIP = COM_DOC_PRODUTOS.DOC_TIP
+                 AND CDP.PRD_COD = COM_DOC_PRODUTOS.PRD_COD
+                 AND CDP.DPR_COD_SEQ = COM_DOC_PRODUTOS.DPR_COD_SEQ
+                 AND CDP.IMP_COD = CMN_IMPOSTOS.IMP_COD
+                 AND CMN_IMPOSTOS.IMP_DES_NOME LIKE '%AFRMM%'),
+            0
+           ) AS AFRMM,
+       (   (   (  100
+                * (SELECT (IDI.IDI_PRE_QUANTIDADE * IDI_FLT_VALOR)
+                     FROM IMP_DI_ITEM IDI
+                    WHERE COM_DOC_PRODUTOS.FIL_COD = IDI.FIL_COD
+                      AND COM_DOC_PRODUTOS.CDI_COD = IDI.CDI_COD
+                      AND COM_DOC_PRODUTOS.CDI_COD_SEQ = IDI.CDI_COD_SEQ
+                      AND COM_DOC_PRODUTOS.ADI_COD = IDI.ADI_COD
+                      AND COM_DOC_PRODUTOS.IDI_COD = IDI.IDI_COD)
+                / (SELECT SUM (IDI.IDI_PRE_QUANTIDADE * IDI_FLT_VALOR)
+                     FROM IMP_DI_ITEM IDI
+                    WHERE COM_DOC_PRODUTOS.FIL_COD = IDI.FIL_COD
+                      AND COM_DOC_PRODUTOS.CDI_COD = IDI.CDI_COD
+                      AND COM_DOC_PRODUTOS.CDI_COD_SEQ = IDI.CDI_COD_SEQ
+                      AND COM_DOC_PRODUTOS.ADI_COD = IDI.ADI_COD)
+               )
+            / 100
+           )
+        * (SELECT IDA.ADI_MNY_DPMNAC_FOB
+             FROM IMP_DI_ADICAO IDA
+            WHERE COM_DOC_PRODUTOS.FIL_COD = IDA.FIL_COD
+              AND COM_DOC_PRODUTOS.CDI_COD = IDA.CDI_COD
+              AND COM_DOC_PRODUTOS.CDI_COD_SEQ = IDA.CDI_COD_SEQ
+              AND COM_DOC_PRODUTOS.ADI_COD = IDA.ADI_COD)
+       ) AS DESPESAS_ADUANEIRAS,
+       (  NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                            YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                            YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                            YFIS_COD         => 1,
+                            YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                            YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                            YIMP_COD         => GER_FILIAL.IMP_COD_FOB,
+                            YOP              => 'IMP_MN'
+                           ),
+               0
+              )
+        + NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                            YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                            YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                            YFIS_COD         => 1,
+                            YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                            YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                            YIMP_COD         => GER_FILIAL.IMP_COD_FRETE,
+                            YOP              => 'IMP_MN'
+                           ),
+               0
+              )
+        + NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                            YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                            YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                            YFIS_COD         => 1,
+                            YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                            YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                            YIMP_COD         => GER_FILIAL.IMP_COD_SEGURO,
+                            YOP              => 'IMP_MN'
+                           ),
+               0
+              )
+       ) AS CIF,
+       NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                         YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                         YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                         YFIS_COD         => 1,
+                         YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                         YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                         YIMP_COD         => GER_FILIAL.IMP_COD_II,
+                         YOP              => 'PCT'
+                        ),
+            0
+           ) AS ALIQ_II,
+       NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                         YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                         YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                         YFIS_COD         => 1,
+                         YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                         YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                         YIMP_COD         => GER_FILIAL.FIL_IMP_COD_VLRIPI,
+                         YOP              => 'PCT'
+                        ),
+            0
+           ) AS ALIQ_IPI,
+       NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                         YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                         YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                         YFIS_COD         => 1,
+                         YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                         YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                         YIMP_COD         => GER_FILIAL.FIL_IMP_COD_PIS,
+                         YOP              => 'PCT'
+                        ),
+            0
+           ) AS ALIQ_PIS,
+       NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                         YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                         YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                         YFIS_COD         => 1,
+                         YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                         YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                         YIMP_COD         => GER_FILIAL.FIL_IMP_COD_COFINS,
+                         YOP              => 'PCT'
+                        ),
+            0
+           ) AS ALIQ_COFINS,
+       NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                         YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                         YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                         YFIS_COD         => 1,
+                         YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                         YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                         YIMP_COD         => GER_FILIAL.FIL_IMP_COD_VLRICMS,
+                         YOP              => 'PCT'
+                        ),
+            0
+           ) AS ALIQ_ICMS,
+       (   ROUND (NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                                    YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                                    YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                                    YFIS_COD         => 1,
+                                    YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                                    YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                                    YIMP_COD         => GER_FILIAL.IMP_COD_BC_II,
+                                    YOP              => 'IMP_MN'
+                                   ),
+                       0
+                      ),
+                  2
+                 )
+        || ' / '
+        || NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                             YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                             YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                             YFIS_COD         => 1,
+                             YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                             YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                             YIMP_COD         => GER_FILIAL.IMP_COD_BC_II,
+                             YOP              => 'PCT'
+                            ),
+                0
+               )
+        || '%'
+       ) AS BASE_II,
+       NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                         YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                         YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                         YFIS_COD         => 1,
+                         YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                         YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                         YIMP_COD         => GER_FILIAL.IMP_COD_II,
+                         YOP              => 'IMP_MN'
+                        ),
+            0
+           ) AS VALOR_II,
+       (   ROUND (NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                                    YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                                    YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                                    YFIS_COD         => 1,
+                                    YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                                    YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                                    YIMP_COD         => GER_FILIAL.FIL_IMP_COD_BCIPI,
+                                    YOP              => 'IMP_MN'
+                                   ),
+                       0
+                      ),
+                  2
+                 )
+        || ' / '
+        || NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                             YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                             YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                             YFIS_COD         => 1,
+                             YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                             YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                             YIMP_COD         => GER_FILIAL.FIL_IMP_COD_BCIPI,
+                             YOP              => 'PCT'
+                            ),
+                0
+               )
+        || '%'
+       ) AS BASE_IPI,
+       NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                         YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                         YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                         YFIS_COD         => 1,
+                         YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                         YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                         YIMP_COD         => GER_FILIAL.FIL_IMP_COD_VLRIPI,
+                         YOP              => 'IMP_MN'
+                        ),
+            0
+           ) AS VALOR_IPI,
+       (   ROUND (NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                                    YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                                    YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                                    YFIS_COD         => 1,
+                                    YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                                    YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                                    YIMP_COD         => GER_FILIAL.IMP_COD_BCPIS,
+                                    YOP              => 'IMP_MN'
+                                   ),
+                       0
+                      ),
+                  2
+                 )
+        || ' / '
+        || NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                             YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                             YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                             YFIS_COD         => 1,
+                             YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                             YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                             YIMP_COD         => GER_FILIAL.IMP_COD_BCPIS,
+                             YOP              => 'PCT'
+                            ),
+                0
+               )
+        || '%'
+       ) AS BASE_PIS,
+       NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                         YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                         YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                         YFIS_COD         => 1,
+                         YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                         YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                         YIMP_COD         => GER_FILIAL.FIL_IMP_COD_PIS,
+                         YOP              => 'IMP_MN'
+                        ),
+            0
+           ) AS VALOR_PIS,
+       (   ROUND (NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                                    YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                                    YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                                    YFIS_COD         => 1,
+                                    YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                                    YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                                    YIMP_COD         => GER_FILIAL.IMP_COD_BCCOFINS,
+                                    YOP              => 'IMP_MN'
+                                   ),
+                       0
+                      ),
+                  2
+                 )
+        || ' / '
+        || NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                             YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                             YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                             YFIS_COD         => 1,
+                             YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                             YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                             YIMP_COD         => GER_FILIAL.IMP_COD_BCCOFINS,
+                             YOP              => 'PCT'
+                            ),
+                0
+               )
+        || '%'
+       ) AS BASE_COFINS,
+       NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                         YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                         YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                         YFIS_COD         => 1,
+                         YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                         YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                         YIMP_COD         => GER_FILIAL.FIL_IMP_COD_COFINS,
+                         YOP              => 'IMP_MN'
+                        ),
+            0
+           ) AS VALOR_COFINS,
+       (  NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                            YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                            YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                            YFIS_COD         => 1,
+                            YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                            YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                            YIMP_COD         => GER_GERENTE.GER_IMP_TX_SISCOMEX,
+                            YOP              => 'IMP_MN'
+                           ),
+               0
+              )
+        + NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                            YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                            YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                            YFIS_COD         => 1,
+                            YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                            YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                            YIMP_COD         => GER_FILIAL.IMP_COD_THC,
+                            YOP              => 'IMP_MN'
+                           ),
+               0
+              )
+       ) AS SISCOMEX,
+       ROUND (NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                                YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                                YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                                YFIS_COD         => 1,
+                                YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                                YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                                YIMP_COD         => GER_FILIAL.FIL_IMP_COD_BCICMS,
+                                YOP              => 'IMP_MN'
+                               ),
+                   0
+                  ),
+              2
+             ) AS BASE_ICMS,
+       NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                         YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                         YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                         YFIS_COD         => 1,
+                         YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                         YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                         YIMP_COD         => GER_FILIAL.FIL_IMP_COD_VLRICMS,
+                         YOP              => 'IMP_MN'
+                        ),
+            0
+           ) AS VALOR_ICMS,
+       NULL AS ARMAZENAGEM,
+       NVL (FCN_TOTNOTA (YFIL_COD         => COM_DOC_PRODUTOS.FIL_COD,
+                         YDOC_TIP         => COM_DOC_PRODUTOS.DOC_TIP,
+                         YDOC_COD         => COM_DOC_PRODUTOS.DOC_COD,
+                         YFIS_COD         => 1,
+                         YPRD_COD         => COM_DOC_PRODUTOS.PRD_COD,
+                         YDPR_COD_SEQ     => COM_DOC_PRODUTOS.DPR_COD_SEQ,
+                         YIMP_COD         => GER_FILIAL.IMP_COD_DUMPING,
+                         YOP              => 'IMP_MN'
+                        ),
+            0
+           ) AS ANTIDUMPING,
+       COM_DOC_PRODUTOS.DPR_FLT_PESO_LIQUIDO AS PESO_LIQUIDO,
+       COM_DOC_PRODUTOS.DPR_FLT_PESO_BRUTO AS PESO_BRUTO
+  FROM COM_DOC_PRODUTOS,
+       COM_PRODUTOS,
+       GER_FILIAL,
+       FIN_DOC,
+       GER_GERENTE
+ WHERE GER_GERENTE.GER_COD = 1
+   AND COM_DOC_PRODUTOS.FIL_COD = GER_FILIAL.FIL_COD
+   --
+   AND COM_DOC_PRODUTOS.PRD_COD = COM_PRODUTOS.PRD_COD
+   --
+   AND FIN_DOC.FIL_COD = COM_DOC_PRODUTOS.FIL_COD
+   AND FIN_DOC.DOC_COD = COM_DOC_PRODUTOS.DOC_COD
+   AND FIN_DOC.DOC_TIP = COM_DOC_PRODUTOS.DOC_TIP
+   AND FIN_DOC.DOC_TIP = 2
+   AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+   AND (   $P{XCDI_COD} IS NULL
+        OR COM_DOC_PRODUTOS.CDI_COD = $P{XCDI_COD})
+   AND (   $P{FIL_COD} IS NULL
+        OR COM_DOC_PRODUTOS.FIL_COD = $P{FIL_COD})
+   AND (   $P{PRI_COD} IS NULL
+        OR NVL (FIN_DOC.PRI_COD, COM_DOC_PRODUTOS.PRI_COD) = $P{PRI_COD})
+   AND (   $P{XPRI_ESP_REFCLIENTE} IS NULL
+        OR EXISTS (
+             SELECT 1
+               FROM IMP_PROCESSO
+              WHERE FIN_DOC.FIL_COD = IMP_PROCESSO.FIL_COD
+                AND NVL (FIN_DOC.PRI_COD, COM_DOC_PRODUTOS.PRI_COD) = IMP_PROCESSO.PRI_COD
+                AND IMP_PROCESSO.PRI_ESP_REFCLIENTE = $P{XPRI_ESP_REFCLIENTE})
+       )]]>
+	</queryString>
+	<field name="SEQ_ITEM" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SEQ_ITEM"/>
+		<property name="com.jaspersoft.studio.field.label" value="SEQ_ITEM"/>
+	</field>
+	<field name="ADIC" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ADIC"/>
+		<property name="com.jaspersoft.studio.field.label" value="ADIC"/>
+	</field>
+	<field name="NCM" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NCM"/>
+		<property name="com.jaspersoft.studio.field.label" value="NCM"/>
+	</field>
+	<field name="PART_NUMBER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="PART_NUMBER"/>
+		<property name="com.jaspersoft.studio.field.label" value="PART_NUMBER"/>
+	</field>
+	<field name="DESCR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DESCR"/>
+		<property name="com.jaspersoft.studio.field.label" value="DESCR"/>
+	</field>
+	<field name="VLR_UN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="VLR_UN"/>
+		<property name="com.jaspersoft.studio.field.label" value="VLR_UN"/>
+	</field>
+	<field name="FOB" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="FOB"/>
+		<property name="com.jaspersoft.studio.field.label" value="FOB"/>
+	</field>
+	<field name="QTD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="QTD"/>
+		<property name="com.jaspersoft.studio.field.label" value="QTD"/>
+	</field>
+	<field name="FRETE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="FRETE"/>
+		<property name="com.jaspersoft.studio.field.label" value="FRETE"/>
+	</field>
+	<field name="SEGURO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SEGURO"/>
+		<property name="com.jaspersoft.studio.field.label" value="SEGURO"/>
+	</field>
+	<field name="AFRMM" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="AFRMM"/>
+		<property name="com.jaspersoft.studio.field.label" value="AFRMM"/>
+	</field>
+	<field name="DESPESAS_ADUANEIRAS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="DESPESAS_ADUANEIRAS"/>
+		<property name="com.jaspersoft.studio.field.label" value="DESPESAS_ADUANEIRAS"/>
+	</field>
+	<field name="CIF" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="CIF"/>
+		<property name="com.jaspersoft.studio.field.label" value="CIF"/>
+	</field>
+	<field name="ALIQ_II" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ALIQ_II"/>
+		<property name="com.jaspersoft.studio.field.label" value="ALIQ_II"/>
+	</field>
+	<field name="ALIQ_IPI" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ALIQ_IPI"/>
+		<property name="com.jaspersoft.studio.field.label" value="ALIQ_IPI"/>
+	</field>
+	<field name="ALIQ_PIS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ALIQ_PIS"/>
+		<property name="com.jaspersoft.studio.field.label" value="ALIQ_PIS"/>
+	</field>
+	<field name="ALIQ_COFINS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ALIQ_COFINS"/>
+		<property name="com.jaspersoft.studio.field.label" value="ALIQ_COFINS"/>
+	</field>
+	<field name="ALIQ_ICMS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ALIQ_ICMS"/>
+		<property name="com.jaspersoft.studio.field.label" value="ALIQ_ICMS"/>
+	</field>
+	<field name="BASE_II" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BASE_II"/>
+		<property name="com.jaspersoft.studio.field.label" value="BASE_II"/>
+	</field>
+	<field name="VALOR_II" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="VALOR_II"/>
+		<property name="com.jaspersoft.studio.field.label" value="VALOR_II"/>
+	</field>
+	<field name="BASE_IPI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BASE_IPI"/>
+		<property name="com.jaspersoft.studio.field.label" value="BASE_IPI"/>
+	</field>
+	<field name="VALOR_IPI" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="VALOR_IPI"/>
+		<property name="com.jaspersoft.studio.field.label" value="VALOR_IPI"/>
+	</field>
+	<field name="BASE_PIS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BASE_PIS"/>
+		<property name="com.jaspersoft.studio.field.label" value="BASE_PIS"/>
+	</field>
+	<field name="VALOR_PIS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="VALOR_PIS"/>
+		<property name="com.jaspersoft.studio.field.label" value="VALOR_PIS"/>
+	</field>
+	<field name="BASE_COFINS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="BASE_COFINS"/>
+		<property name="com.jaspersoft.studio.field.label" value="BASE_COFINS"/>
+	</field>
+	<field name="VALOR_COFINS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="VALOR_COFINS"/>
+		<property name="com.jaspersoft.studio.field.label" value="VALOR_COFINS"/>
+	</field>
+	<field name="SISCOMEX" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SISCOMEX"/>
+		<property name="com.jaspersoft.studio.field.label" value="SISCOMEX"/>
+	</field>
+	<field name="BASE_ICMS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="BASE_ICMS"/>
+		<property name="com.jaspersoft.studio.field.label" value="BASE_ICMS"/>
+	</field>
+	<field name="VALOR_ICMS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="VALOR_ICMS"/>
+		<property name="com.jaspersoft.studio.field.label" value="VALOR_ICMS"/>
+	</field>
+	<field name="ARMAZENAGEM" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ARMAZENAGEM"/>
+		<property name="com.jaspersoft.studio.field.label" value="ARMAZENAGEM"/>
+	</field>
+	<field name="ANTIDUMPING" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ANTIDUMPING"/>
+		<property name="com.jaspersoft.studio.field.label" value="ANTIDUMPING"/>
+	</field>
+	<field name="PESO_LIQUIDO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PESO_LIQUIDO"/>
+		<property name="com.jaspersoft.studio.field.label" value="PESO_LIQUIDO"/>
+	</field>
+	<field name="PESO_BRUTO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PESO_BRUTO"/>
+		<property name="com.jaspersoft.studio.field.label" value="PESO_BRUTO"/>
+	</field>
+	<variable name="FOB_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{FOB}]]></variableExpression>
+	</variable>
+	<variable name="FRETE_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{FRETE}]]></variableExpression>
+	</variable>
+	<variable name="SEGURO_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SEGURO}]]></variableExpression>
+	</variable>
+	<variable name="AFRMM_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{AFRMM}]]></variableExpression>
+	</variable>
+	<variable name="DESP_ADUANEIRAS_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{DESPESAS_ADUANEIRAS}]]></variableExpression>
+	</variable>
+	<variable name="CIF_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{CIF}]]></variableExpression>
+	</variable>
+	<variable name="VALOR_II_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALOR_II}]]></variableExpression>
+	</variable>
+	<variable name="VALOR_IPI_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALOR_IPI}]]></variableExpression>
+	</variable>
+	<variable name="VALOR_PIS_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALOR_PIS}]]></variableExpression>
+	</variable>
+	<variable name="VALOR_COFINS_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALOR_COFINS}]]></variableExpression>
+	</variable>
+	<variable name="SISCOMEX_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SISCOMEX}]]></variableExpression>
+	</variable>
+	<variable name="VALOR_ICMS_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALOR_ICMS}]]></variableExpression>
+	</variable>
+	<variable name="ARMAZENAGEM_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{ARMAZENAGEM}]]></variableExpression>
+	</variable>
+	<variable name="ANTIDUMPING_TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{ANTIDUMPING}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="202" y="0" width="708" height="80" uuid="4058958a-8209-4f22-8310-04fab6c800d6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PLANILHA DE ENCARGOS GERAIS DETALHADA]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" hAlign="Center">
+				<reportElement x="0" y="0" width="202" height="80" uuid="05e3983f-275d-404c-b7b7-dc5104771f1c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression><![CDATA[$P{XREPORT_DATA}.get("FIL_BIT_LOGO")]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="31">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<frame>
+				<reportElement x="0" y="0" width="3620" height="20" uuid="be93a2b5-5ee1-41f8-9e9f-57972f35eb79"/>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="9124c87e-3746-4e3c-bc63-dce7c54d9e5b"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[SEQ. ÍTEM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="100" y="0" width="102" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="85899e7b-4268-4e7e-8265-6e1684db1987"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ADIÇÃO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="202" y="0" width="102" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="1a6c6df0-783e-4f0c-a61c-d4ac28718a36"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[NCM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="304" y="0" width="102" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="ac2c6150-de74-4fa3-bedc-8accc318de44"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PART NUMBER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="406" y="0" width="374" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="6f9f3263-decb-43bb-b86b-3d882c271992"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[DESCRIÇÃO DA MERCADORIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="780" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="0aeee0d8-a20e-4e04-b009-840436650306"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALOR UNITÁRIO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="880" y="0" width="110" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="2fbdfe81-5832-4b0c-912c-6f3fdb7f2eac"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALOR TOTAL R$]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="990" y="0" width="90" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="18e3f39b-a994-4a13-b8ac-996585d5d9d5"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[QTD. MERC.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="1080" y="0" width="140" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="bf4864f3-88b5-415c-8b78-52fd56b7c9c7"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALOR UNITÁRIO FRETE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="1220" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="7ca08518-bc8c-4f9b-ab4d-be2e281dc82b"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALOR DO SEGURO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="1340" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="00dccef4-b0e3-485f-a114-90b1b7bebdbb"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[AFRMM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="1440" y="0" width="140" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="7b2c26e1-100b-49f8-b56f-1121e22d4f82"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[DESPESAS ADUANEIRAS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="1580" y="0" width="140" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="ce3aa136-272c-47f6-8e3f-84c14808c51c"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[CIF]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="1720" y="0" width="80" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="1ce2628a-0df3-4b70-a8a7-87d6f375e936"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ALIQ. II]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="1800" y="0" width="80" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="013d4a03-73bb-4cba-b020-8f9d0640d866"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ALIQ. IPI]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="1880" y="0" width="80" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="9a0e0a00-3834-4611-8f39-a3423f976f78"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ALIQ. PIS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="1960" y="0" width="80" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="a36f7083-1cec-4511-acee-f22b9a02edd7"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ALIQ. COFINS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="2040" y="0" width="80" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="21ef91d0-bf69-4a57-8e2e-2d6dbf8d05f4"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ALIQ. ICMS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="2120" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="564a1491-bed0-4b3e-854a-0b9f75390b07"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[BASE II]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="2220" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="a059aa1c-5c87-4056-b5ae-e4c634e56368"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALOR II]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="2320" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="60acb25e-8eff-4755-8088-da6a48e847bb"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[BASE IPI]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="2420" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="10fd3ed2-a69e-4928-b494-940440179871"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALOR IPI]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="2520" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="927bd952-8b46-4128-9a61-ce95998ae62d"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[BASE PIS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="2620" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="9f998ae0-ddd5-47b5-83a6-7ac6dcab2d3b"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALOR PIS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="2720" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="67809934-3af9-47f9-9fcb-57f9d4308d30"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[BASE COFINS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="2820" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="316bf1a4-e9e6-4308-b9b5-249476ddf4c1"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALOR COFINS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="2920" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="87af6971-e3e1-4ce5-901d-51d6ffaf2f3a"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TAXA SISCOMEX]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="3020" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="64ab69a3-b6ff-47c9-9909-fffa038764d6"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[BASE ICMS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="3120" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="8f5e19c8-2c6e-45ac-a350-abbe60f486f3"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALOR ICMS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="3220" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="939e1923-10e7-413d-bbf0-416328117d0c"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ARMAZENAGEM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="3320" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="0bc6837e-3fa9-4be5-9ea6-0ad70ca4a2f0"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ANTIDUPING]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="3420" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="62cc4b7f-286f-4f26-bee5-67a54c06158f"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PESO LÍQUIDO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="3520" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="3d3990a9-4a1d-4e80-9774-6dd788441187"/>
+					<box>
+						<pen lineWidth="1.0" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#C4C0C0"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PESO BRUTO]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="3620" height="20" backcolor="#D9D9D9" uuid="34e1fd88-f7c3-4218-a24f-08827d2b859f"/>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="0" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="bc280bce-2524-477c-8679-618a57be1a43"/>
+					<box>
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SEQ_ITEM}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="100" y="0" width="102" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="7901ba4d-dad2-4d32-9a03-823122550a07"/>
+					<box>
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ADIC}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="202" y="0" width="102" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="96315373-b2bb-4ff0-bb92-c973083b1f94"/>
+					<box>
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NCM}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="304" y="0" width="102" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="577bd2c5-f881-435e-b7e6-8c0827f8b178"/>
+					<box>
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PART_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="406" y="0" width="374" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f50529c0-1b7c-4c6e-a9f2-4ffb1e957331"/>
+					<box leftPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DESCR}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="780" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="756bc877-400e-4baa-87e8-56a59c06d207"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{VLR_UN}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="880" y="0" width="110" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="37ddcc15-1cc3-4215-b64d-615682e019c6"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FOB}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="990" y="0" width="90" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="86e8784e-3443-4566-baf2-4c1a7b791f3a"/>
+					<box>
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{QTD}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="1080" y="0" width="140" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="21b7d8fc-45f0-47ef-a4c3-bb94570fa4c2"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FRETE}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="1220" y="0" width="120" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f155b561-1743-4d20-a409-a91a532a6133"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SEGURO}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="1340" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="44e47a11-7068-44c8-9a34-96013e7fd473"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{AFRMM}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="1440" y="0" width="140" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="19c56168-712b-446f-a11f-4a81252addc4"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DESPESAS_ADUANEIRAS}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="1580" y="0" width="140" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="58256962-f6ac-4bef-bc5e-856e014b3277"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CIF}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="1720" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="87f14948-ab1a-40ed-882c-63e802b119e7"/>
+					<box>
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ALIQ_II}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="1800" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="31a447c5-6f82-46fd-a43c-c8eb9ab30c2a"/>
+					<box>
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ALIQ_IPI}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="1880" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="e113c45e-8a01-45d6-b983-fefd7947726b"/>
+					<box>
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ALIQ_PIS}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="1960" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="12605104-21a3-4597-b0f3-042a22629ad7"/>
+					<box>
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ALIQ_COFINS}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2040" y="0" width="80" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="e161d9f7-5509-4bb4-80fe-a8357794775e"/>
+					<box>
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ALIQ_ICMS}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2120" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="403ad419-27fa-41cc-95fb-07b0136ac672"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{BASE_II}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2220" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="26461ba0-b55d-42c1-a598-97bdfc44c6a5"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{VALOR_II}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2320" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="bdf6fb11-053b-402b-92cf-92270ba26aa8"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{VALOR_IPI}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2420" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="811f25f5-75a8-4955-991f-62ce50e99c36"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{VALOR_IPI}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2520" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="3d0447ba-3514-4c22-802d-75214eb63877"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{BASE_PIS}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2620" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="e2529b05-0c4b-4641-9846-7900d1b440e3"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{VALOR_PIS}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2720" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="722de46f-05ff-40cd-acb7-3a228ff5b9a4"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{BASE_COFINS}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2820" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="502b6ada-365b-454a-a194-296180538966"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{VALOR_COFINS}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2920" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="285c6a6d-016c-4ce3-9d85-d6c8f7999443"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SISCOMEX}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="3020" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="4bd08774-3f04-4be0-97da-89d8e7bd65f3"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{BASE_ICMS}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="3120" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="2dabfb85-ed97-4fe8-af2a-b754d26aed6c"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{VALOR_ICMS}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="3220" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="ae34d40c-f0ea-4120-888a-e7c79927010b"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ARMAZENAGEM}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="3320" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="0c208df0-5f32-4913-a612-357d5935554d"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ANTIDUMPING}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="3420" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="087c1a2d-3405-44ed-bc8b-3b7eb7795d20"/>
+					<box>
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PESO_LIQUIDO}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="3520" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="09516c5f-13f0-4870-adc9-ba0add8cc30e"/>
+					<box>
+						<pen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PESO_BRUTO}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<summary>
+		<band height="28">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="8" width="3620" height="20" backcolor="#30478A" uuid="8643df8b-81c7-46e0-ae6a-518a6b50a391"/>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="880" y="0" width="110" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="0fd00ffd-ba8b-4fcf-9bc7-ab1bbaa5354c"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{FOB_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="1220" y="0" width="120" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="b73efc45-6292-4ca2-9f05-009550232719"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SEGURO_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="1080" y="0" width="140" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="84dabdfa-d7c6-4400-8453-32e8e3c85887"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{FRETE_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="1340" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="0c01f5d9-7ebc-454a-a518-ae7272643c14"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{AFRMM_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="1440" y="0" width="140" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="ff31ca9d-8067-4cf5-9a4c-c64735f59815"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{DESP_ADUANEIRAS_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="1580" y="0" width="140" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="1a871c86-98c1-44c2-a081-b16ab40da85f"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{CIF_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2220" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="73899929-59a3-45ea-88e6-ed2d61e0cb5a"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{VALOR_II_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2420" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="c23e68b6-06b4-4613-9274-a7edb9403b46"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{VALOR_IPI_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2620" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="08f157b8-4582-42e7-9695-2fdb827aee36"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{VALOR_PIS_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2820" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="363698b9-02a1-4f21-aa40-c1e3dd38f61d"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{VALOR_COFINS_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="2920" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="03eed414-dd43-49ef-b73a-5c138cdce3c8"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SISCOMEX_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="3120" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="2cefd0c8-bde3-4b7d-83c1-12a2431fcaca"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{VALOR_ICMS_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="3220" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="a6f848df-d176-4c68-97f0-3aef137423f8"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ARMAZENAGEM_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="###,###,###,##0.00;(###,###,###,##0.00)" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="3320" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#30478A" uuid="6169f3f1-59de-4dca-8541-368840de3db0"/>
+					<box rightPadding="6">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ANTIDUMPING_TOTAL}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</summary>
+</jasperReport>
