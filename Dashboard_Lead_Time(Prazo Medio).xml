@@ -1,0 +1,1618 @@
+<dashboard><codigo>DBS_043</codigo><nome>LEAD TIME - PRAZO MÉDIO</nome><usuario>0</usuario><widgets><widget><codigo>WGS_244</codigo><nome>LEAD TIME - PRAZO MÉDIO (DESEMBARAÇO)</nome><cliente>0</cliente><tipo>1</tipo><observacao/><tamFonte>3</tamFonte><colunas><coluna indice="1"><nome>LT_EMBARQUE_DIA</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna><coluna indice="2"><nome>LT_EMBARQUE_SEMANA</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna><coluna indice="3"><nome>LT_EMBARQUE_MES</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna><coluna indice="4"><nome>LT_EMBARQUE_ANO</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna></colunas><parametros/><fonteDados><nome>LEAD TIME - PRAZO MÉDIO (EMBARQUE)</nome><sql>SELECT ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (NVL (COM_PEDIDOS.PED_DTA_EMISSAO,
+                                                                      PRC_INVOICE.INV_DTA_EMISSAO
+                                                                     ),
+                                                                 &apos;DD/MM/RRRR&apos;
+                                                                ),
+                                                        TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_EMBARQUE, &apos;DD/MM/RRRR&apos;),
+                                                        1
+                                                       )
+                                        )
+                                   )
+                          FROM PRC_CONHECIMENTO_TRASP,
+                               IMP_PROCESSO,
+                               PRC_INVOICE,
+                               COM_PEDIDOS
+                         WHERE PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                           AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+                           --
+                           AND IMP_PROCESSO.FIL_COD = PRC_INVOICE.FIL_COD
+                           AND IMP_PROCESSO.PRI_COD = PRC_INVOICE.PRI_COD
+                           --
+                           AND IMP_PROCESSO.FIL_COD = COM_PEDIDOS.FIL_COD(+)
+                           AND IMP_PROCESSO.PRI_COD = COM_PEDIDOS.PRI_COD(+)
+                           AND PED_VLD_TIPO(+) = 2
+                           AND PED_VLD_STATUS(+) NOT IN (3, 4)
+                           AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                           AND IMP_PROCESSO.PRI_VLD_STATUS != 4
+                           AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;DD/MM/YYYY&apos;) = TO_CHAR (SYSDATE, &apos;DD/MM/YYYY&apos;)
+                               ) ),
+                      0
+                     ) AS LT_EMBARQUE_DIA,
+               ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (NVL (COM_PEDIDOS.PED_DTA_EMISSAO,
+                                                                      PRC_INVOICE.INV_DTA_EMISSAO
+                                                                     ),
+                                                                 &apos;DD/MM/RRRR&apos;
+                                                                ),
+                                                        TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_EMBARQUE, &apos;DD/MM/RRRR&apos;),
+                                                        1
+                                                       )
+                                        )
+                                   )
+                          FROM PRC_CONHECIMENTO_TRASP,
+                               IMP_PROCESSO,
+                               PRC_INVOICE,
+                               COM_PEDIDOS
+                         WHERE PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                           AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+                           --
+                           AND IMP_PROCESSO.FIL_COD = PRC_INVOICE.FIL_COD
+                           AND IMP_PROCESSO.PRI_COD = PRC_INVOICE.PRI_COD
+                           --
+                           AND IMP_PROCESSO.FIL_COD = COM_PEDIDOS.FIL_COD(+)
+                           AND IMP_PROCESSO.PRI_COD = COM_PEDIDOS.PRI_COD(+)
+                           AND PED_VLD_TIPO(+) = 2
+                           AND PED_VLD_STATUS(+) NOT IN (3, 4)
+                           AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                           AND IMP_PROCESSO.PRI_VLD_STATUS != 4
+                           AND (TO_CHAR (SYSDATE, &apos;WW/YYYY&apos;) = TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;WW/YYYY&apos;) ) ),
+                      0
+                     ) AS LT_EMBARQUE_SEMANA,
+               ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (NVL (COM_PEDIDOS.PED_DTA_EMISSAO,
+                                                                      PRC_INVOICE.INV_DTA_EMISSAO
+                                                                     ),
+                                                                 &apos;DD/MM/RRRR&apos;
+                                                                ),
+                                                        TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_EMBARQUE, &apos;DD/MM/RRRR&apos;),
+                                                        1
+                                                       )
+                                        )
+                                   )
+                          FROM PRC_CONHECIMENTO_TRASP,
+                               IMP_PROCESSO,
+                               PRC_INVOICE,
+                               COM_PEDIDOS
+                         WHERE PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                           AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+                           --
+                           AND IMP_PROCESSO.FIL_COD = PRC_INVOICE.FIL_COD
+                           AND IMP_PROCESSO.PRI_COD = PRC_INVOICE.PRI_COD
+                           --
+                           AND IMP_PROCESSO.FIL_COD = COM_PEDIDOS.FIL_COD(+)
+                           AND IMP_PROCESSO.PRI_COD = COM_PEDIDOS.PRI_COD(+)
+                           AND PED_VLD_TIPO(+) = 2
+                           AND PED_VLD_STATUS(+) NOT IN (3, 4)
+                           AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                           AND IMP_PROCESSO.PRI_VLD_STATUS != 4
+                           AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;MM/YYYY&apos;) = TO_CHAR (SYSDATE, &apos;MM/YYYY&apos;) ) ),
+                      0
+                     ) AS LT_EMBARQUE_MES,
+               ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (NVL (COM_PEDIDOS.PED_DTA_EMISSAO,
+                                                                      PRC_INVOICE.INV_DTA_EMISSAO
+                                                                     ),
+                                                                 &apos;DD/MM/RRRR&apos;
+                                                                ),
+                                                        TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_EMBARQUE, &apos;DD/MM/RRRR&apos;),
+                                                        1
+                                                       )
+                                        )
+                                   )
+                          FROM PRC_CONHECIMENTO_TRASP,
+                               IMP_PROCESSO,
+                               PRC_INVOICE,
+                               COM_PEDIDOS
+                         
+                         WHERE PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                          AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+
+                           --
+                           AND IMP_PROCESSO.FIL_COD = PRC_INVOICE.FIL_COD
+                           AND IMP_PROCESSO.PRI_COD = PRC_INVOICE.PRI_COD
+                           --
+                           AND IMP_PROCESSO.FIL_COD = COM_PEDIDOS.FIL_COD(+)
+                           AND IMP_PROCESSO.PRI_COD = COM_PEDIDOS.PRI_COD(+)
+                           AND PED_VLD_TIPO(+) = 2
+                           AND PED_VLD_STATUS(+) NOT IN (3, 4)
+                           AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                           AND IMP_PROCESSO.PRI_VLD_STATUS != 4
+                           AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;YYYY&apos;) = TO_CHAR (SYSDATE, &apos;YYYY&apos;) ) ),
+                      0
+                     ) AS LT_EMBARQUE_ANO
+          FROM DUAL</sql><tempoAtualizacao>10</tempoAtualizacao><observacao/><componente><arquivo>WFD_202</arquivo><nome>LEAD TIME - PRAZO MÉDIO (EMBARQUE)</nome></componente><colunas><coluna><nome>LT_EMBARQUE_DIA</nome><tipo>1</tipo><label>Dia atual</label><hint/></coluna><coluna><nome>LT_EMBARQUE_SEMANA</nome><tipo>1</tipo><label>Semana atual</label><hint/></coluna><coluna><nome>LT_EMBARQUE_MES</nome><tipo>1</tipo><label>Mês atual</label><hint/></coluna><coluna><nome>LT_EMBARQUE_ANO</nome><tipo>1</tipo><label>Ano atual</label><hint/></coluna></colunas><parametros/></fonteDados><ordem>0</ordem><largura>2</largura><altura>2</altura></widget><widget><codigo>WGS_250</codigo><nome>LEAD TIME - PRAZO MÉDIO (TOTAL)</nome><cliente>0</cliente><tipo>1</tipo><observacao/><tamFonte>3</tamFonte><colunas><coluna indice="1"><nome>LT_TOTAL_DIA</nome><decimais/><eixo>0</eixo><grupo/><alinhamento>0</alinhamento></coluna><coluna indice="2"><nome>LT_TOTAL_SEMANA</nome><decimais/><eixo>0</eixo><grupo/><alinhamento>0</alinhamento></coluna><coluna indice="3"><nome>LT_TOTAL_MES</nome><decimais/><eixo>0</eixo><grupo/><alinhamento>0</alinhamento></coluna><coluna indice="4"><nome>LT_TOTAL_ANO</nome><decimais/><eixo>0</eixo><grupo/><alinhamento>0</alinhamento></coluna></colunas><parametros/><fonteDados><nome>LEAD TIME - PRAZO MÉDIO - PRAZO MÉDIO (TOTAL)</nome><sql>SELECT TO_NUMBER(DECODE (LT_TOTAL_DIA, 0, NULL, LT_TOTAL_DIA)) AS LT_TOTAL_DIA,
+       TO_NUMBER(DECODE (LT_TOTAL_SEMANA, 0, NULL, LT_TOTAL_SEMANA)) AS LT_TOTAL_SEMANA,
+       TO_NUMBER(DECODE (LT_TOTAL_MES, 0, NULL, LT_TOTAL_MES)) AS LT_TOTAL_MES,
+       TO_NUMBER(DECODE (LT_TOTAL_ANO, 0, NULL, LT_TOTAL_ANO)) AS LT_TOTAL_ANO
+  FROM (SELECT ROUND
+                 ( (SELECT ABS
+                             (AVG
+                                (FCN_DIF_DATAS
+                                             (TO_DATE (COM_PEDIDOS.PED_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                              TO_DATE (NVL ( (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                                FROM IMP_PROCESSO_FECHAMENTO
+                                                               WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 1),
+                                                            (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                               FROM IMP_PROCESSO_FECHAMENTO
+                                                              WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 2)
+                                                           ),
+                                                       &apos;DD/MM/RRRR&apos;
+                                                      ),
+                                              1
+                                             )
+                                )
+                             )
+                      FROM IMP_PROCESSO,
+                           COM_PEDIDOS
+                     WHERE IMP_PROCESSO.FIL_COD = COM_PEDIDOS.FIL_COD(+)
+                       AND IMP_PROCESSO.PRI_COD = COM_PEDIDOS.PRI_COD(+)
+                       AND PED_VLD_TIPO(+) = 2
+                       AND PED_VLD_STATUS(+) NOT IN (3, 4)
+                       AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                       AND IMP_PROCESSO.PRI_VLD_STATUS != 4
+                       --
+                       AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;DD/MM/YYYY&apos;) = TO_CHAR (SYSDATE, &apos;DD/MM/YYYY&apos;) ) ),
+                  0
+                 ) AS LT_TOTAL_DIA,
+               ROUND
+                 ( (SELECT ABS
+                             (AVG
+                                (FCN_DIF_DATAS
+                                             (TO_DATE (COM_PEDIDOS.PED_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                              TO_DATE (NVL ( (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                                FROM IMP_PROCESSO_FECHAMENTO
+                                                               WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 1),
+                                                            (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                               FROM IMP_PROCESSO_FECHAMENTO
+                                                              WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 2)
+                                                           ),
+                                                       &apos;DD/MM/RRRR&apos;
+                                                      ),
+                                              1
+                                             )
+                                )
+                             )
+                      FROM IMP_PROCESSO,
+                           COM_PEDIDOS
+                     WHERE IMP_PROCESSO.FIL_COD = COM_PEDIDOS.FIL_COD(+)
+                       AND IMP_PROCESSO.PRI_COD = COM_PEDIDOS.PRI_COD(+)
+                       AND PED_VLD_TIPO(+) = 2
+                       AND PED_VLD_STATUS(+) NOT IN (3, 4)
+                       AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                       AND IMP_PROCESSO.PRI_VLD_STATUS != 4
+                       --
+                       AND (TO_CHAR (SYSDATE, &apos;WW/YYYY&apos;) = TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;WW/YYYY&apos;) ) ),
+                  0
+                 ) AS LT_TOTAL_SEMANA,
+               ROUND
+                 ( (SELECT ABS
+                             (AVG
+                                (FCN_DIF_DATAS
+                                             (TO_DATE (COM_PEDIDOS.PED_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                              TO_DATE (NVL ( (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                                FROM IMP_PROCESSO_FECHAMENTO
+                                                               WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 1),
+                                                            (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                               FROM IMP_PROCESSO_FECHAMENTO
+                                                              WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 2)
+                                                           ),
+                                                       &apos;DD/MM/RRRR&apos;
+                                                      ),
+                                              1
+                                             )
+                                )
+                             )
+                      FROM IMP_PROCESSO,
+                           COM_PEDIDOS
+                     WHERE IMP_PROCESSO.FIL_COD = COM_PEDIDOS.FIL_COD(+)
+                       AND IMP_PROCESSO.PRI_COD = COM_PEDIDOS.PRI_COD(+)
+                       AND PED_VLD_TIPO(+) = 2
+                       AND PED_VLD_STATUS(+) NOT IN (3, 4)
+                       AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                       AND IMP_PROCESSO.PRI_VLD_STATUS != 4
+                       --
+                       AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;MM/YYYY&apos;) = TO_CHAR (SYSDATE, &apos;MM/YYYY&apos;) ) ),
+                  0
+                 ) AS LT_TOTAL_MES,
+               ROUND
+                 ( (SELECT ABS
+                             (AVG
+                                (FCN_DIF_DATAS
+                                             (TO_DATE (COM_PEDIDOS.PED_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                              TO_DATE (NVL ( (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                                FROM IMP_PROCESSO_FECHAMENTO
+                                                               WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 1),
+                                                            (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                               FROM IMP_PROCESSO_FECHAMENTO
+                                                              WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 2)
+                                                           ),
+                                                       &apos;DD/MM/RRRR&apos;
+                                                      ),
+                                              1
+                                             )
+                                )
+                             )
+                      FROM IMP_PROCESSO,
+                           COM_PEDIDOS
+                     WHERE IMP_PROCESSO.FIL_COD = COM_PEDIDOS.FIL_COD(+)
+                       AND IMP_PROCESSO.PRI_COD = COM_PEDIDOS.PRI_COD(+)
+                       AND PED_VLD_TIPO(+) = 2
+                       AND PED_VLD_STATUS(+) NOT IN (3, 4)
+                       AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                       AND IMP_PROCESSO.PRI_VLD_STATUS != 4
+                       --
+                       AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;YYYY&apos;) = TO_CHAR (SYSDATE, &apos;YYYY&apos;) ) ),
+                  0
+                 ) AS LT_TOTAL_ANO
+          FROM DUAL) XTAB</sql><tempoAtualizacao>10</tempoAtualizacao><observacao/><componente><arquivo>WFD_208</arquivo><nome>LEAD TIME - PRAZO MÉDIO (TOTAL)</nome></componente><colunas><coluna><nome>LT_TOTAL_DIA</nome><tipo>1</tipo><label>Dia atual</label><hint/></coluna><coluna><nome>LT_TOTAL_SEMANA</nome><tipo>1</tipo><label>Semana atual</label><hint/></coluna><coluna><nome>LT_TOTAL_MES</nome><tipo>1</tipo><label>Mes atual</label><hint/></coluna><coluna><nome>LT_TOTAL_ANO</nome><tipo>1</tipo><label>Ano atual</label><hint/></coluna></colunas><parametros/></fonteDados><ordem>7</ordem><largura>2</largura><altura>2</altura></widget><widget><codigo>WGS_248</codigo><nome>LEAD TIME - PRAZO MÉDIO (FATURAMENTO)</nome><cliente>0</cliente><tipo>1</tipo><observacao/><tamFonte>3</tamFonte><colunas><coluna indice="1"><nome>LT_FATURAMENTO_DIA</nome><decimais/><eixo>0</eixo><grupo/><alinhamento>0</alinhamento></coluna><coluna indice="2"><nome>LT_FATURAMENTO_SEMANA</nome><decimais/><eixo>0</eixo><grupo/><alinhamento>0</alinhamento></coluna><coluna indice="3"><nome>LT_FATURAMENTO_MES</nome><decimais/><eixo>0</eixo><grupo/><alinhamento>0</alinhamento></coluna><coluna indice="4"><nome>LT_FATURAMENTO_ANO</nome><decimais/><eixo>0</eixo><grupo/><alinhamento>0</alinhamento></coluna></colunas><parametros/><fonteDados><nome>LEAD TIME - PRAZO MÉDIO (FATURAMENTO)</nome><sql>SELECT TO_NUMBER (DECODE (LT_FATURAMENTO_DIA, 0, NULL, LT_FATURAMENTO_DIA) ) AS LT_FATURAMENTO_DIA,
+       TO_NUMBER (DECODE (LT_FATURAMENTO_SEMANA, 0, NULL, LT_FATURAMENTO_SEMANA) ) AS LT_FATURAMENTO_SEMANA,
+       TO_NUMBER (DECODE (LT_FATURAMENTO_MES, 0, NULL, LT_FATURAMENTO_MES) ) AS LT_FATURAMENTO_MES,
+       TO_NUMBER (DECODE (LT_FATURAMENTO_ANO, 0, NULL, LT_FATURAMENTO_ANO) ) AS LT_FATURAMENTO_ANO
+  FROM (SELECT ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (IMP_DI_CABECALHO.CDI_DTA_CI, &apos;DD/MM/RRRR&apos;),
+                                                        TO_DATE (FIN_DOC.DOC_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                                        0
+                                                       )
+                                        )
+                                   )
+                          FROM IMP_PROCESSO,
+                               FIN_DOC,
+                               IMP_DI_CABECALHO
+                         WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                           AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                           AND IMP_PROCESSO.FIL_COD = FIN_DOC.FIL_COD
+                           AND IMP_PROCESSO.PRI_COD = FIN_DOC.PRI_COD
+                           --
+                           AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                           AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                           AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                           --
+                           AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                           AND FIN_DOC.DOC_TIP = 1
+                           --
+                           AND (    (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                     AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                     AND (FIN_DOC.DOC_VLD_NFEHOM = 0)                                    /*EM CADASTRO*/
+                                    )
+                                OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                    AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                    AND (FIN_DOC.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                    AND (FIN_DOC.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                              /*HOMOLOGAÇÃO*/
+                                   )
+                                OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 1)
+                                    AND (FIN_DOC.DOC_VLD_SITUACAO = 1)
+                                    AND (FIN_DOC.DOC_VLD_CANCNFE = 0)                                     /*FINALIZADO*/
+                                   )
+                               )
+                           AND FIN_DOC.DOC_DTA_EMISSAO =
+                                 (SELECT MIN (A.DOC_DTA_EMISSAO)
+                                    FROM FIN_DOC A
+                                   WHERE A.FIL_COD = IMP_PROCESSO.FIL_COD
+                                     AND A.PRI_COD = IMP_PROCESSO.PRI_COD
+                                     AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                                     AND FIN_DOC.DOC_TIP = 1
+                                     --
+                                     AND (    (     (A.DOC_VLD_FINALIZADO = 0)
+                                               AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                               AND (A.DOC_VLD_NFEHOM = 0)                                /*EM CADASTRO*/
+                                              )
+                                          OR (     (A.DOC_VLD_FINALIZADO = 0)
+                                              AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                              AND (A.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                              AND (A.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                          /*HOMOLOGAÇÃO*/
+                                             )
+                                          OR (     (A.DOC_VLD_FINALIZADO = 1)
+                                              AND (A.DOC_VLD_SITUACAO = 1)
+                                              AND (A.DOC_VLD_CANCNFE = 0)                                 /*FINALIZADO*/
+                                             )
+                                         ) )
+                           --
+                           AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;DD/MM/YYYY&apos;) = TO_CHAR (SYSDATE, &apos;DD/MM/YYYY&apos;)
+                               ) ),
+                      0
+                     ) AS LT_FATURAMENTO_DIA,
+               ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (IMP_DI_CABECALHO.CDI_DTA_CI, &apos;DD/MM/RRRR&apos;),
+                                                        TO_DATE (FIN_DOC.DOC_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                                        0
+                                                       )
+                                        )
+                                   )
+                          FROM IMP_PROCESSO,
+                               FIN_DOC,
+                               IMP_DI_CABECALHO
+                         WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                           AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                           AND IMP_PROCESSO.FIL_COD = FIN_DOC.FIL_COD
+                           AND IMP_PROCESSO.PRI_COD = FIN_DOC.PRI_COD
+                           --
+                           AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                           AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                           AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                           --
+                           AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                           AND FIN_DOC.DOC_TIP = 1
+                           --
+                           AND (    (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                     AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                     AND (FIN_DOC.DOC_VLD_NFEHOM = 0)                                    /*EM CADASTRO*/
+                                    )
+                                OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                    AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                    AND (FIN_DOC.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                    AND (FIN_DOC.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                              /*HOMOLOGAÇÃO*/
+                                   )
+                                OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 1)
+                                    AND (FIN_DOC.DOC_VLD_SITUACAO = 1)
+                                    AND (FIN_DOC.DOC_VLD_CANCNFE = 0)                                     /*FINALIZADO*/
+                                   )
+                               )
+                           AND FIN_DOC.DOC_DTA_EMISSAO =
+                                 (SELECT MIN (A.DOC_DTA_EMISSAO)
+                                    FROM FIN_DOC A
+                                   WHERE A.FIL_COD = IMP_PROCESSO.FIL_COD
+                                     AND A.PRI_COD = IMP_PROCESSO.PRI_COD
+                                     AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                                     AND FIN_DOC.DOC_TIP = 1
+                                     --
+                                     AND (    (     (A.DOC_VLD_FINALIZADO = 0)
+                                               AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                               AND (A.DOC_VLD_NFEHOM = 0)                                /*EM CADASTRO*/
+                                              )
+                                          OR (     (A.DOC_VLD_FINALIZADO = 0)
+                                              AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                              AND (A.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                              AND (A.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                          /*HOMOLOGAÇÃO*/
+                                             )
+                                          OR (     (A.DOC_VLD_FINALIZADO = 1)
+                                              AND (A.DOC_VLD_SITUACAO = 1)
+                                              AND (A.DOC_VLD_CANCNFE = 0)                                 /*FINALIZADO*/
+                                             )
+                                         ) )
+                           --
+                           AND (TO_CHAR (SYSDATE, &apos;WW/YYYY&apos;) = TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;WW/YYYY&apos;) ) ),
+                      0
+                     ) AS LT_FATURAMENTO_SEMANA,
+               ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (IMP_DI_CABECALHO.CDI_DTA_CI, &apos;DD/MM/RRRR&apos;),
+                                                        TO_DATE (FIN_DOC.DOC_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                                        0
+                                                       )
+                                        )
+                                   )
+                          FROM IMP_PROCESSO,
+                               FIN_DOC,
+                               IMP_DI_CABECALHO
+                         WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                           AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                           AND IMP_PROCESSO.FIL_COD = FIN_DOC.FIL_COD
+                           AND IMP_PROCESSO.PRI_COD = FIN_DOC.PRI_COD
+                           --
+                           AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                           AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                           AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                           --
+                           AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                           AND FIN_DOC.DOC_TIP = 1
+                           --
+                           AND (    (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                     AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                     AND (FIN_DOC.DOC_VLD_NFEHOM = 0)                                    /*EM CADASTRO*/
+                                    )
+                                OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                    AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                    AND (FIN_DOC.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                    AND (FIN_DOC.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                              /*HOMOLOGAÇÃO*/
+                                   )
+                                OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 1)
+                                    AND (FIN_DOC.DOC_VLD_SITUACAO = 1)
+                                    AND (FIN_DOC.DOC_VLD_CANCNFE = 0)                                     /*FINALIZADO*/
+                                   )
+                               )
+                           AND FIN_DOC.DOC_DTA_EMISSAO =
+                                 (SELECT MIN (A.DOC_DTA_EMISSAO)
+                                    FROM FIN_DOC A
+                                   WHERE A.FIL_COD = IMP_PROCESSO.FIL_COD
+                                     AND A.PRI_COD = IMP_PROCESSO.PRI_COD
+                                     AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                                     AND FIN_DOC.DOC_TIP = 1
+                                     --
+                                     AND (    (     (A.DOC_VLD_FINALIZADO = 0)
+                                               AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                               AND (A.DOC_VLD_NFEHOM = 0)                                /*EM CADASTRO*/
+                                              )
+                                          OR (     (A.DOC_VLD_FINALIZADO = 0)
+                                              AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                              AND (A.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                              AND (A.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                          /*HOMOLOGAÇÃO*/
+                                             )
+                                          OR (     (A.DOC_VLD_FINALIZADO = 1)
+                                              AND (A.DOC_VLD_SITUACAO = 1)
+                                              AND (A.DOC_VLD_CANCNFE = 0)                                 /*FINALIZADO*/
+                                             )
+                                         ) )
+                           --
+                           AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;MM/YYYY&apos;) = TO_CHAR (SYSDATE, &apos;MM/YYYY&apos;) ) ),
+                      0
+                     ) AS LT_FATURAMENTO_MES,
+               ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (IMP_DI_CABECALHO.CDI_DTA_CI, &apos;DD/MM/RRRR&apos;),
+                                                        TO_DATE (FIN_DOC.DOC_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                                        0
+                                                       )
+                                        )
+                                   )
+                          FROM IMP_PROCESSO,
+                               FIN_DOC,
+                               IMP_DI_CABECALHO
+                         WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                           AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                           AND IMP_PROCESSO.FIL_COD = FIN_DOC.FIL_COD
+                           AND IMP_PROCESSO.PRI_COD = FIN_DOC.PRI_COD
+                           --
+                           AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                           AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                           AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                           --
+                           AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                           AND FIN_DOC.DOC_TIP = 1
+                           --
+                           AND (    (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                     AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                     AND (FIN_DOC.DOC_VLD_NFEHOM = 0)                                    /*EM CADASTRO*/
+                                    )
+                                OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                    AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                    AND (FIN_DOC.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                    AND (FIN_DOC.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                              /*HOMOLOGAÇÃO*/
+                                   )
+                                OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 1)
+                                    AND (FIN_DOC.DOC_VLD_SITUACAO = 1)
+                                    AND (FIN_DOC.DOC_VLD_CANCNFE = 0)                                     /*FINALIZADO*/
+                                   )
+                               )
+                           AND FIN_DOC.DOC_DTA_EMISSAO =
+                                 (SELECT MIN (A.DOC_DTA_EMISSAO)
+                                    FROM FIN_DOC A
+                                   WHERE A.FIL_COD = IMP_PROCESSO.FIL_COD
+                                     AND A.PRI_COD = IMP_PROCESSO.PRI_COD
+                                     AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                                     AND FIN_DOC.DOC_TIP = 1
+                                     --
+                                     AND (    (     (A.DOC_VLD_FINALIZADO = 0)
+                                               AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                               AND (A.DOC_VLD_NFEHOM = 0)                                /*EM CADASTRO*/
+                                              )
+                                          OR (     (A.DOC_VLD_FINALIZADO = 0)
+                                              AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                              AND (A.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                              AND (A.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                          /*HOMOLOGAÇÃO*/
+                                             )
+                                          OR (     (A.DOC_VLD_FINALIZADO = 1)
+                                              AND (A.DOC_VLD_SITUACAO = 1)
+                                              AND (A.DOC_VLD_CANCNFE = 0)                                 /*FINALIZADO*/
+                                             )
+                                         ) )
+                           --
+                           AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;YYYY&apos;) = TO_CHAR (SYSDATE, &apos;YYYY&apos;) ) ),
+                      0
+                     ) AS LT_FATURAMENTO_ANO
+          FROM DUAL) XTAB</sql><tempoAtualizacao>10</tempoAtualizacao><observacao/><componente><arquivo>WFD_206</arquivo><nome>LEAD TIME - PRAZO MÉDIO (FATURAMENTO)</nome></componente><colunas><coluna><nome>LT_FATURAMENTO_DIA</nome><tipo>1</tipo><label>Dia atual</label><hint/></coluna><coluna><nome>LT_FATURAMENTO_SEMANA</nome><tipo>1</tipo><label>Semana atual</label><hint/></coluna><coluna><nome>LT_FATURAMENTO_MES</nome><tipo>1</tipo><label>Mes atual</label><hint/></coluna><coluna><nome>LT_FATURAMENTO_ANO</nome><tipo>1</tipo><label>Ano atual</label><hint/></coluna></colunas><parametros/></fonteDados><ordem>5</ordem><largura>2</largura><altura>2</altura></widget><widget><codigo>WGS_246</codigo><nome>LEAD TIME - PRAZO MÉDIO (REGISTRO)</nome><cliente>0</cliente><tipo>1</tipo><observacao/><tamFonte>3</tamFonte><colunas><coluna indice="1"><nome>LT_REGISTRO_DIA</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna><coluna indice="2"><nome>LT_REGISTRO_SEMANA</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna><coluna indice="3"><nome>LT_REGISTRO_MES</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna><coluna indice="4"><nome>LT_REGISTRO_ANO</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna></colunas><parametros/><fonteDados><nome>LEAD TIME - PRAZO MÉDIO (REGISTRO)</nome><sql>SELECT ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_CHEGADA, &apos;DD/MM/RRRR&apos;),
+                                                TO_DATE (IMP_DI_CABECALHO.CDI_DTA_REGISTRO, &apos;DD/MM/RRRR&apos;),
+                                                0
+                                               )
+                                )
+                           )
+                  FROM PRC_CONHECIMENTO_TRASP,
+                       IMP_PROCESSO,
+                       IMP_DI_CABECALHO
+                 WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                   AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                   --
+                   AND PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                   AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+                   --
+                   AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                   AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                   --
+                   AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                   --
+                   AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;DD/MM/YYYY&apos;) = TO_CHAR (SYSDATE, &apos;DD/MM/YYYY&apos;) ) ),
+              0
+             ) AS LT_REGISTRO_DIA,
+       ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_CHEGADA, &apos;DD/MM/RRRR&apos;),
+                                                TO_DATE (IMP_DI_CABECALHO.CDI_DTA_REGISTRO, &apos;DD/MM/RRRR&apos;),
+                                                0
+                                               )
+                                )
+                           )
+                  FROM PRC_CONHECIMENTO_TRASP,
+                       IMP_PROCESSO,
+                       IMP_DI_CABECALHO
+                 WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                   AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                   --
+                   AND PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                   AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+                   --
+                   AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                   AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                   --
+                   AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                   --
+                   AND (TO_CHAR (SYSDATE, &apos;WW/YYYY&apos;) = TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;WW/YYYY&apos;) ) ),
+              0
+             ) AS LT_REGISTRO_SEMANA,
+       ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_CHEGADA, &apos;DD/MM/RRRR&apos;),
+                                                TO_DATE (IMP_DI_CABECALHO.CDI_DTA_REGISTRO, &apos;DD/MM/RRRR&apos;),
+                                                0
+                                               )
+                                )
+                           )
+                  FROM PRC_CONHECIMENTO_TRASP,
+                       IMP_PROCESSO,
+                       IMP_DI_CABECALHO
+                 WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                   AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                   --
+                   AND PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                   AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+                   --
+                   AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                   AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                   --
+                   AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                   --
+                   AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;MM/YYYY&apos;) = TO_CHAR (SYSDATE, &apos;MM/YYYY&apos;) ) ),
+              0
+             ) AS LT_REGISTRO_MES,
+       ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_CHEGADA, &apos;DD/MM/RRRR&apos;),
+                                                TO_DATE (IMP_DI_CABECALHO.CDI_DTA_REGISTRO, &apos;DD/MM/RRRR&apos;),
+                                                0
+                                               )
+                                )
+                           )
+                  FROM PRC_CONHECIMENTO_TRASP,
+                       IMP_PROCESSO,
+                       IMP_DI_CABECALHO
+                 WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                   AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                   --
+                   AND PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                   AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+                   --
+                   AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                   AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                   --
+                   AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                   --
+                   AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;YYYY&apos;) = TO_CHAR (SYSDATE, &apos;YYYY&apos;) ) ),
+              0
+             ) AS LT_REGISTRO_ANO
+  FROM DUAL</sql><tempoAtualizacao>10</tempoAtualizacao><observacao/><componente><arquivo>WFD_204</arquivo><nome>LEAD TIME - PRAZO MÉDIO (REGISTRO)</nome></componente><colunas><coluna><nome>LT_REGISTRO_DIA</nome><tipo>1</tipo><label>Dia atual</label><hint/></coluna><coluna><nome>LT_REGISTRO_SEMANA</nome><tipo>1</tipo><label>Semana atual</label><hint/></coluna><coluna><nome>LT_REGISTRO_MES</nome><tipo>1</tipo><label>Mes atual</label><hint/></coluna><coluna><nome>LT_REGISTRO_ANO</nome><tipo>1</tipo><label>Ano atual</label><hint/></coluna></colunas><parametros/></fonteDados><ordem>2</ordem><largura>2</largura><altura>2</altura></widget><widget><codigo>WGS_247</codigo><nome>LEAD TIME - PRAZO MÉDIO (DESEMBARAÇO)</nome><cliente>0</cliente><tipo>1</tipo><observacao/><tamFonte>3</tamFonte><colunas><coluna indice="1"><nome>LT_DESEMBARACO_DIA</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna><coluna indice="2"><nome>LT_DESEMBARACO_SEMANA</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna><coluna indice="3"><nome>LT_DESEMBARACO_MES</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna><coluna indice="4"><nome>LT_DESEMBARACO_ANO</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna></colunas><parametros/><fonteDados><nome>LEAD TIME - PRAZO MÉDIO (DESEMBARAÇO)</nome><sql>SELECT TO_NUMBER (DECODE (LT_DESEMBARACO_DIA, 0, NULL, LT_DESEMBARACO_DIA) ) AS LT_DESEMBARACO_DIA,
+       TO_NUMBER (DECODE (LT_DESEMBARACO_SEMANA, 0, NULL, LT_DESEMBARACO_SEMANA) ) AS LT_DESEMBARACO_SEMANA,
+       TO_NUMBER (DECODE (LT_DESEMBARACO_MES, 0, NULL, LT_DESEMBARACO_MES) ) AS LT_DESEMBARACO_MES,
+       TO_NUMBER (DECODE (LT_DESEMBARACO_ANO, 0, NULL, LT_DESEMBARACO_ANO) ) AS LT_DESEMBARACO_ANO
+  FROM (SELECT ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (IMP_DI_CABECALHO.CDI_DTA_REGISTRO, &apos;DD/MM/RRRR&apos;),
+                                                        TO_DATE (IMP_DI_CABECALHO.CDI_DTA_CI, &apos;DD/MM/RRRR&apos;),
+                                                        0
+                                                       )
+                                        )
+                                   )
+                          FROM IMP_PROCESSO,
+                               IMP_DI_CABECALHO
+                         WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                           AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                           --
+                           AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                           AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                           --
+                           AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                           --
+                           AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;DD/MM/YYYY&apos;) = TO_CHAR (SYSDATE, &apos;DD/MM/YYYY&apos;)
+                               ) ),
+                      0
+                     ) AS LT_DESEMBARACO_DIA,
+               ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (IMP_DI_CABECALHO.CDI_DTA_REGISTRO, &apos;DD/MM/RRRR&apos;),
+                                                        TO_DATE (IMP_DI_CABECALHO.CDI_DTA_CI, &apos;DD/MM/RRRR&apos;),
+                                                        0
+                                                       )
+                                        )
+                                   )
+                          FROM IMP_PROCESSO,
+                               IMP_DI_CABECALHO
+                         WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                           AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                           --
+                           AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                           AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                           --
+                           AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                           --
+                           AND (TO_CHAR (SYSDATE, &apos;WW/YYYY&apos;) = TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;WW/YYYY&apos;) ) ),
+                      0
+                     ) AS LT_DESEMBARACO_SEMANA,
+               ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (IMP_DI_CABECALHO.CDI_DTA_REGISTRO, &apos;DD/MM/RRRR&apos;),
+                                                        TO_DATE (IMP_DI_CABECALHO.CDI_DTA_CI, &apos;DD/MM/RRRR&apos;),
+                                                        0
+                                                       )
+                                        )
+                                   )
+                          FROM IMP_PROCESSO,
+                               IMP_DI_CABECALHO
+                         WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                           AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                           --
+                           AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                           AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                           --
+                           AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                           --
+                           AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;MM/YYYY&apos;) = TO_CHAR (SYSDATE, &apos;MM/YYYY&apos;) ) ),
+                      0
+                     ) AS LT_DESEMBARACO_MES,
+               ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (IMP_DI_CABECALHO.CDI_DTA_REGISTRO, &apos;DD/MM/RRRR&apos;),
+                                                        TO_DATE (IMP_DI_CABECALHO.CDI_DTA_CI, &apos;DD/MM/RRRR&apos;),
+                                                        0
+                                                       )
+                                        )
+                                   )
+                          FROM IMP_PROCESSO,
+                               IMP_DI_CABECALHO
+                         WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                           AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                           --
+                           AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                           AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                           --
+                           AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                           --
+                           AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;YYYY&apos;) = TO_CHAR (SYSDATE, &apos;YYYY&apos;) ) ),
+                      0
+                     ) AS LT_DESEMBARACO_ANO
+          FROM DUAL) XTAB</sql><tempoAtualizacao>10</tempoAtualizacao><observacao/><componente><arquivo>WFD_205</arquivo><nome>LEAD TIME - PRAZO MÉDIO (DESEMBARAÇO)</nome></componente><colunas><coluna><nome>LT_DESEMBARACO_DIA</nome><tipo>1</tipo><label>Dia atual</label><hint/></coluna><coluna><nome>LT_DESEMBARACO_SEMANA</nome><tipo>1</tipo><label>Semana atual</label><hint/></coluna><coluna><nome>LT_DESEMBARACO_MES</nome><tipo>1</tipo><label>Mes atual</label><hint/></coluna><coluna><nome>LT_DESEMBARACO_ANO</nome><tipo>1</tipo><label>Ano atual</label><hint/></coluna></colunas><parametros/></fonteDados><ordem>3</ordem><largura>2</largura><altura>2</altura></widget><widget><codigo>WGS_251</codigo><nome>LEAD TIME - PRAZO MÉDIO (COMPARATIVO)</nome><cliente>0</cliente><tipo>2</tipo><observacao/><tamFonte>3</tamFonte><colunas><coluna indice="1"><nome>DESCR</nome><decimais/><eixo>1</eixo><grupo/><alinhamento>0</alinhamento></coluna><coluna indice="2"><nome>TOTAL_VALUE</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna></colunas><parametros/><fonteDados><nome>LEAD TIME - PRAZO MÉDIO (COMPARATIVO)</nome><sql>SELECT DESCR,
+       TO_NUMBER(DECODE(TOTAL_VALUE,0,NULL,TOTAL_VALUE)) AS TOTAL_VALUE
+  FROM (SELECT   CASE
+                   WHEN LT_EMBARQUE IS NOT NULL THEN &apos;EMBARQUE&apos;
+                   WHEN LT_TRANSITO_INTER IS NOT NULL THEN &apos;TRÂNSITO INTERNACIONAL&apos;
+                   WHEN LT_REGISTRO IS NOT NULL THEN &apos;REGISTRO&apos;
+                   WHEN LT_DESEMBARACO IS NOT NULL THEN &apos;DESEMBARAÇO&apos;
+                   WHEN LT_FATURAMENTO IS NOT NULL THEN &apos;FAURAMENTO&apos;
+                   WHEN LT_FECHAMENTO IS NOT NULL THEN &apos;FECHAMENTO&apos;
+                   WHEN LT_TOTAL IS NOT NULL THEN &apos;TOTAL&apos;
+                 END AS DESCR,
+                 SUM (CASE
+                        WHEN LT_EMBARQUE IS NOT NULL THEN LT_EMBARQUE
+                        WHEN LT_TRANSITO_INTER IS NOT NULL THEN LT_TRANSITO_INTER
+                        WHEN LT_REGISTRO IS NOT NULL THEN LT_REGISTRO
+                        WHEN LT_DESEMBARACO IS NOT NULL THEN LT_DESEMBARACO
+                        WHEN LT_FATURAMENTO IS NOT NULL THEN LT_FATURAMENTO
+                        WHEN LT_FECHAMENTO IS NOT NULL THEN LT_FECHAMENTO
+                        WHEN LT_TOTAL IS NOT NULL THEN LT_TOTAL
+                      END
+                     ) AS TOTAL_VALUE
+            FROM (SELECT NVL
+                           (ROUND
+                              ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (NVL (COM_PEDIDOS.PED_DTA_EMISSAO,
+                                                                               PRC_INVOICE.INV_DTA_EMISSAO
+                                                                              ),
+                                                                          &apos;DD/MM/RRRR&apos;
+                                                                         ),
+                                                                 TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_EMBARQUE,
+                                                                          &apos;DD/MM/RRRR&apos;
+                                                                         ),
+                                                                 1
+                                                                )
+                                                 )
+                                            )
+                                   FROM PRC_CONHECIMENTO_TRASP,
+                                        IMP_PROCESSO,
+                                        PRC_INVOICE,
+                                        COM_PEDIDOS
+                                  WHERE PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                                    AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+                                    --
+                                    AND IMP_PROCESSO.FIL_COD = PRC_INVOICE.FIL_COD
+                                    AND IMP_PROCESSO.PRI_COD = PRC_INVOICE.PRI_COD
+                                    --
+                                    AND IMP_PROCESSO.FIL_COD = COM_PEDIDOS.FIL_COD(+)
+                                    AND IMP_PROCESSO.PRI_COD = COM_PEDIDOS.PRI_COD(+)
+                                    AND PED_VLD_TIPO(+) = 2
+                                    AND PED_VLD_STATUS(+) NOT IN (3, 4)
+                                    AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                                    AND IMP_PROCESSO.PRI_VLD_STATUS != 4
+                                    AND (   NVL (:XPERIODO, 0) = 0
+                                         OR (    :XPERIODO = 1
+                                             AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;DD/MM/YYYY&apos;) =
+                                                                                         TO_CHAR (SYSDATE, &apos;DD/MM/YYYY&apos;)
+                                                 )
+                                            )
+                                         OR (    :XPERIODO = 2
+                                             AND (TO_CHAR (SYSDATE, &apos;WW/YYYY&apos;) =
+                                                                      TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;WW/YYYY&apos;)
+                                                 )
+                                            )
+                                         OR (    :XPERIODO = 3
+                                             AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;MM/YYYY&apos;) =
+                                                                                            TO_CHAR (SYSDATE, &apos;MM/YYYY&apos;)
+                                                 )
+                                            )
+                                         OR (    :XPERIODO = 4
+                                             AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;YYYY&apos;) =
+                                                                                               TO_CHAR (SYSDATE, &apos;YYYY&apos;)
+                                                 )
+                                            )
+                                        ) ),
+                               0
+                              ),
+                            0
+                           ) AS LT_EMBARQUE,
+                         NULL AS LT_TRANSITO_INTER,
+                         NULL AS LT_REGISTRO,
+                         NULL AS LT_DESEMBARACO,
+                         NULL AS LT_FATURAMENTO,
+                         NULL AS LT_FECHAMENTO,
+                         NULL AS LT_TOTAL
+                    FROM DUAL
+                  UNION ALL
+                  SELECT NULL AS LT_EMBARQUE,
+                         NVL
+                           (ROUND
+                              ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_EMBARQUE,
+                                                                          &apos;DD/MM/RRRR&apos;
+                                                                         ),
+                                                                 TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_CHEGADA,
+                                                                          &apos;DD/MM/RRRR&apos;
+                                                                         ),
+                                                                 0
+                                                                )
+                                                 )
+                                            )
+                                   FROM PRC_CONHECIMENTO_TRASP,
+                                        IMP_PROCESSO
+                                  WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                                    AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                                    --
+                                    AND PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                                    AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+                                    AND (   NVL (:XPERIODO, 0) = 0
+                                         OR (    :XPERIODO = 1
+                                             AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;DD/MM/YYYY&apos;) =
+                                                                                         TO_CHAR (SYSDATE, &apos;DD/MM/YYYY&apos;)
+                                                 )
+                                            )
+                                         OR (    :XPERIODO = 2
+                                             AND (TO_CHAR (SYSDATE, &apos;WW/YYYY&apos;) =
+                                                                      TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;WW/YYYY&apos;)
+                                                 )
+                                            )
+                                         OR (    :XPERIODO = 3
+                                             AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;MM/YYYY&apos;) =
+                                                                                            TO_CHAR (SYSDATE, &apos;MM/YYYY&apos;)
+                                                 )
+                                            )
+                                         OR (    :XPERIODO = 4
+                                             AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;YYYY&apos;) =
+                                                                                               TO_CHAR (SYSDATE, &apos;YYYY&apos;)
+                                                 )
+                                            )
+                                        ) ),
+                               0
+                              ),
+                            0
+                           ) AS LT_TRANSITO_INTER,
+                         NULL AS LT_REGISTRO,
+                         NULL AS LT_DESEMBARACO,
+                         NULL AS LT_FATURAMENTO,
+                         NULL AS LT_FECHAMENTO,
+                         NULL AS LT_TOTAL
+                    FROM DUAL
+                  UNION ALL
+                  SELECT NULL AS LT_EMBARQUE,
+                         NULL AS LT_TRANSITO_INTER,
+                         NVL
+                           (ROUND
+                               ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_CHEGADA,
+                                                                           &apos;DD/MM/RRRR&apos;
+                                                                          ),
+                                                                  TO_DATE (IMP_DI_CABECALHO.CDI_DTA_REGISTRO,
+                                                                           &apos;DD/MM/RRRR&apos;
+                                                                          ),
+                                                                  0
+                                                                 )
+                                                  )
+                                             )
+                                    FROM PRC_CONHECIMENTO_TRASP,
+                                         IMP_PROCESSO,
+                                         IMP_DI_CABECALHO
+                                   WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                                     AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                                     --
+                                     AND PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                                     AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+                                     --
+                                     AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                                     AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                                     --
+                                     AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                                     --
+                                     AND (   NVL (:XPERIODO, 0) = 0
+                                          OR (    :XPERIODO = 1
+                                              AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;DD/MM/YYYY&apos;) =
+                                                                                         TO_CHAR (SYSDATE, &apos;DD/MM/YYYY&apos;)
+                                                  )
+                                             )
+                                          OR (    :XPERIODO = 2
+                                              AND (TO_CHAR (SYSDATE, &apos;WW/YYYY&apos;) =
+                                                                      TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;WW/YYYY&apos;)
+                                                  )
+                                             )
+                                          OR (    :XPERIODO = 3
+                                              AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;MM/YYYY&apos;) =
+                                                                                            TO_CHAR (SYSDATE, &apos;MM/YYYY&apos;)
+                                                  )
+                                             )
+                                          OR (    :XPERIODO = 4
+                                              AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;YYYY&apos;) =
+                                                                                               TO_CHAR (SYSDATE, &apos;YYYY&apos;)
+                                                  )
+                                             )
+                                         ) ),
+                                0
+                               ),
+                            0
+                           ) AS LT_REGISTRO,
+                         NULL AS LT_DESEMBARACO,
+                         NULL AS LT_FATURAMENTO,
+                         NULL AS LT_FECHAMENTO,
+                         NULL AS LT_TOTAL
+                    FROM DUAL
+                  UNION ALL
+                  SELECT NULL AS LT_EMBARQUE,
+                         NULL AS LT_TRANSITO_INTER,
+                         NULL AS LT_REGISTRO,
+                         NVL (ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (IMP_DI_CABECALHO.CDI_DTA_REGISTRO,
+                                                                                &apos;DD/MM/RRRR&apos;
+                                                                               ),
+                                                                       TO_DATE (IMP_DI_CABECALHO.CDI_DTA_CI,
+                                                                                &apos;DD/MM/RRRR&apos;
+                                                                               ),
+                                                                       0
+                                                                      )
+                                                       )
+                                                  )
+                                         FROM IMP_PROCESSO,
+                                              IMP_DI_CABECALHO
+                                        WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                                          AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                                          --
+                                          AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                                          AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                                          --
+                                          AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                                          --
+                                          AND (   NVL (:XPERIODO, 0) = 0
+                                               OR (    :XPERIODO = 1
+                                                   AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;DD/MM/YYYY&apos;) =
+                                                                                         TO_CHAR (SYSDATE, &apos;DD/MM/YYYY&apos;)
+                                                       )
+                                                  )
+                                               OR (    :XPERIODO = 2
+                                                   AND (TO_CHAR (SYSDATE, &apos;WW/YYYY&apos;) =
+                                                                      TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;WW/YYYY&apos;)
+                                                       )
+                                                  )
+                                               OR (    :XPERIODO = 3
+                                                   AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;MM/YYYY&apos;) =
+                                                                                            TO_CHAR (SYSDATE, &apos;MM/YYYY&apos;)
+                                                       )
+                                                  )
+                                               OR (    :XPERIODO = 4
+                                                   AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;YYYY&apos;) =
+                                                                                               TO_CHAR (SYSDATE, &apos;YYYY&apos;)
+                                                       )
+                                                  )
+                                              ) ),
+                                     0
+                                    ),
+                              0
+                             ) AS LT_DESEMBARACO,
+                         NULL AS LT_FATURAMENTO,
+                         NULL AS LT_FECHAMENTO,
+                         NULL AS LT_TOTAL
+                    FROM DUAL
+                  UNION ALL
+                  SELECT NULL AS LT_EMBARQUE,
+                         NULL AS LT_TRANSITO_INTER,
+                         NULL AS LT_REGISTRO,
+                         NULL AS LT_DESEMBARACO,
+                         NVL (ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (IMP_DI_CABECALHO.CDI_DTA_CI,
+                                                                                &apos;DD/MM/RRRR&apos;
+                                                                               ),
+                                                                       TO_DATE (FIN_DOC.DOC_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                                                       0
+                                                                      )
+                                                       )
+                                                  )
+                                         FROM IMP_PROCESSO,
+                                              FIN_DOC,
+                                              IMP_DI_CABECALHO
+                                        WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                                          AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                                          AND IMP_PROCESSO.FIL_COD = FIN_DOC.FIL_COD
+                                          AND IMP_PROCESSO.PRI_COD = FIN_DOC.PRI_COD
+                                          --
+                                          AND IMP_DI_CABECALHO.FIL_COD = IMP_PROCESSO.FIL_COD
+                                          AND IMP_DI_CABECALHO.PRI_COD = IMP_PROCESSO.PRI_COD
+                                          AND IMP_DI_CABECALHO.CDI_VLD_VALIDPROC = 1
+                                          --
+                                          AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                                          AND FIN_DOC.DOC_TIP = 1
+                                          --
+                                          AND (    (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                                    AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                                    AND (FIN_DOC.DOC_VLD_NFEHOM = 0)                     /*EM CADASTRO*/
+                                                   )
+                                               OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                                   AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                                   AND (FIN_DOC.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                                   AND (FIN_DOC.DOC_VLD_CANCELAMENTO &lt;&gt; 1)               /*HOMOLOGAÇÃO*/
+                                                  )
+                                               OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 1)
+                                                   AND (FIN_DOC.DOC_VLD_SITUACAO = 1)
+                                                   AND (FIN_DOC.DOC_VLD_CANCNFE = 0)                      /*FINALIZADO*/
+                                                  )
+                                              )
+                                          AND FIN_DOC.DOC_DTA_EMISSAO =
+                                                (SELECT MIN (A.DOC_DTA_EMISSAO)
+                                                   FROM FIN_DOC A
+                                                  WHERE A.FIL_COD = IMP_PROCESSO.FIL_COD
+                                                    AND A.PRI_COD = IMP_PROCESSO.PRI_COD
+                                                    AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                                                    AND FIN_DOC.DOC_TIP = 1
+                                                    --
+                                                    AND (    (     (A.DOC_VLD_FINALIZADO = 0)
+                                                              AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                                              AND (A.DOC_VLD_NFEHOM = 0)                 /*EM CADASTRO*/
+                                                             )
+                                                         OR (     (A.DOC_VLD_FINALIZADO = 0)
+                                                             AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                                             AND (A.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                                             AND (A.DOC_VLD_CANCELAMENTO &lt;&gt; 1)           /*HOMOLOGAÇÃO*/
+                                                            )
+                                                         OR (     (A.DOC_VLD_FINALIZADO = 1)
+                                                             AND (A.DOC_VLD_SITUACAO = 1)
+                                                             AND (A.DOC_VLD_CANCNFE = 0)                  /*FINALIZADO*/
+                                                            )
+                                                        ) )
+                                          --
+                                          AND (   NVL (:XPERIODO, 0) = 0
+                                               OR (    :XPERIODO = 1
+                                                   AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;DD/MM/YYYY&apos;) =
+                                                                                         TO_CHAR (SYSDATE, &apos;DD/MM/YYYY&apos;)
+                                                       )
+                                                  )
+                                               OR (    :XPERIODO = 2
+                                                   AND (TO_CHAR (SYSDATE, &apos;WW/YYYY&apos;) =
+                                                                      TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;WW/YYYY&apos;)
+                                                       )
+                                                  )
+                                               OR (    :XPERIODO = 3
+                                                   AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;MM/YYYY&apos;) =
+                                                                                            TO_CHAR (SYSDATE, &apos;MM/YYYY&apos;)
+                                                       )
+                                                  )
+                                               OR (    :XPERIODO = 4
+                                                   AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;YYYY&apos;) =
+                                                                                               TO_CHAR (SYSDATE, &apos;YYYY&apos;)
+                                                       )
+                                                  )
+                                              ) ),
+                                     0
+                                    ),
+                              0
+                             ) AS LT_FATURAMENTO,
+                         NULL AS LT_FECHAMENTO,
+                         NULL AS LT_TOTAL
+                    FROM DUAL
+                  UNION ALL
+                  SELECT NULL AS LT_EMBARQUE,
+                         NULL AS LT_TRANSITO_INTER,
+                         NULL AS LT_REGISTRO,
+                         NULL AS LT_DESEMBARACO,
+                         NULL AS LT_FATURAMENTO,
+                         NVL
+                           (ROUND
+                              ( (SELECT ABS
+                                          (AVG
+                                             (FCN_DIF_DATAS
+                                                (TO_DATE (FIN_DOC.DOC_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                                 TO_DATE
+                                                       (NVL ( (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                                 FROM IMP_PROCESSO_FECHAMENTO
+                                                                WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                  AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                  AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                  AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 1),
+                                                             (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                                FROM IMP_PROCESSO_FECHAMENTO
+                                                               WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 2)
+                                                            ),
+                                                        &apos;DD/MM/RRRR&apos;
+                                                       ),
+                                                 0
+                                                )
+                                             )
+                                          )
+                                   FROM IMP_PROCESSO,
+                                        FIN_DOC
+                                  WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                                    AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                                    AND IMP_PROCESSO.FIL_COD = FIN_DOC.FIL_COD
+                                    AND IMP_PROCESSO.PRI_COD = FIN_DOC.PRI_COD
+                                    --
+                                    AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                                    AND FIN_DOC.DOC_TIP = 1
+                                    --
+                                    AND (    (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                              AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                              AND (FIN_DOC.DOC_VLD_NFEHOM = 0)                           /*EM CADASTRO*/
+                                             )
+                                         OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                             AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                             AND (FIN_DOC.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                             AND (FIN_DOC.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                     /*HOMOLOGAÇÃO*/
+                                            )
+                                         OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 1)
+                                             AND (FIN_DOC.DOC_VLD_SITUACAO = 1)
+                                             AND (FIN_DOC.DOC_VLD_CANCNFE = 0)                            /*FINALIZADO*/
+                                            )
+                                        )
+                                    AND FIN_DOC.DOC_DTA_EMISSAO =
+                                          (SELECT MIN (A.DOC_DTA_EMISSAO)
+                                             FROM FIN_DOC A
+                                            WHERE A.FIL_COD = IMP_PROCESSO.FIL_COD
+                                              AND A.PRI_COD = IMP_PROCESSO.PRI_COD
+                                              AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                                              AND FIN_DOC.DOC_TIP = 1
+                                              --
+                                              AND (    (     (A.DOC_VLD_FINALIZADO = 0)
+                                                        AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                                        AND (A.DOC_VLD_NFEHOM = 0)                       /*EM CADASTRO*/
+                                                       )
+                                                   OR (     (A.DOC_VLD_FINALIZADO = 0)
+                                                       AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                                       AND (A.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                                       AND (A.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                 /*HOMOLOGAÇÃO*/
+                                                      )
+                                                   OR (     (A.DOC_VLD_FINALIZADO = 1)
+                                                       AND (A.DOC_VLD_SITUACAO = 1)
+                                                       AND (A.DOC_VLD_CANCNFE = 0)                        /*FINALIZADO*/
+                                                      )
+                                                  ) )
+                                    AND (   NVL (:XPERIODO, 0) = 0
+                                         OR (    :XPERIODO = 1
+                                             AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;DD/MM/YYYY&apos;) =
+                                                                                         TO_CHAR (SYSDATE, &apos;DD/MM/YYYY&apos;)
+                                                 )
+                                            )
+                                         OR (    :XPERIODO = 2
+                                             AND (TO_CHAR (SYSDATE, &apos;WW/YYYY&apos;) =
+                                                                      TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;WW/YYYY&apos;)
+                                                 )
+                                            )
+                                         OR (    :XPERIODO = 3
+                                             AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;MM/YYYY&apos;) =
+                                                                                            TO_CHAR (SYSDATE, &apos;MM/YYYY&apos;)
+                                                 )
+                                            )
+                                         OR (    :XPERIODO = 4
+                                             AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;YYYY&apos;) =
+                                                                                               TO_CHAR (SYSDATE, &apos;YYYY&apos;)
+                                                 )
+                                            )
+                                        ) ),
+                               0
+                              ),
+                            0
+                           ) AS LT_FECHAMENTO,
+                         NULL AS LT_TOTAL
+                    FROM DUAL
+                  UNION ALL
+                  SELECT NULL AS LT_EMBARQUE,
+                         NULL AS LT_TRANSITO_INTER,
+                         NULL AS LT_REGISTRO,
+                         NULL AS LT_DESEMBARACO,
+                         NULL AS LT_FATURAMENTO,
+                         NULL AS LT_FECHAMENTO,
+                         NVL
+                           (ROUND
+                              ( (SELECT ABS
+                                          (AVG
+                                             (FCN_DIF_DATAS
+                                                (TO_DATE (COM_PEDIDOS.PED_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                                 TO_DATE
+                                                       (NVL ( (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                                 FROM IMP_PROCESSO_FECHAMENTO
+                                                                WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                  AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                  AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                  AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 1),
+                                                             (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                                FROM IMP_PROCESSO_FECHAMENTO
+                                                               WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 2)
+                                                            ),
+                                                        &apos;DD/MM/RRRR&apos;
+                                                       ),
+                                                 1
+                                                )
+                                             )
+                                          )
+                                   FROM IMP_PROCESSO,
+                                        COM_PEDIDOS
+                                  WHERE IMP_PROCESSO.FIL_COD = COM_PEDIDOS.FIL_COD(+)
+                                    AND IMP_PROCESSO.PRI_COD = COM_PEDIDOS.PRI_COD(+)
+                                    AND PED_VLD_TIPO(+) = 2
+                                    AND PED_VLD_STATUS(+) NOT IN (3, 4)
+                                    AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                                    AND IMP_PROCESSO.PRI_VLD_STATUS != 4
+                                    --
+                                    AND (   NVL (:XPERIODO, 0) = 0
+                                         OR (    :XPERIODO = 1
+                                             AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;DD/MM/YYYY&apos;) =
+                                                                                         TO_CHAR (SYSDATE, &apos;DD/MM/YYYY&apos;)
+                                                 )
+                                            )
+                                         OR (    :XPERIODO = 2
+                                             AND (TO_CHAR (SYSDATE, &apos;WW/YYYY&apos;) =
+                                                                      TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;WW/YYYY&apos;)
+                                                 )
+                                            )
+                                         OR (    :XPERIODO = 3
+                                             AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;MM/YYYY&apos;) =
+                                                                                            TO_CHAR (SYSDATE, &apos;MM/YYYY&apos;)
+                                                 )
+                                            )
+                                         OR (    :XPERIODO = 4
+                                             AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;YYYY&apos;) =
+                                                                                               TO_CHAR (SYSDATE, &apos;YYYY&apos;)
+                                                 )
+                                            )
+                                        ) ),
+                               0
+                              ),
+                            0
+                           ) AS LT_TOTAL
+                    FROM DUAL) XTAB
+        GROUP BY CASE
+                   WHEN LT_EMBARQUE IS NOT NULL THEN &apos;EMBARQUE&apos;
+                   WHEN LT_TRANSITO_INTER IS NOT NULL THEN &apos;TRÂNSITO INTERNACIONAL&apos;
+                   WHEN LT_REGISTRO IS NOT NULL THEN &apos;REGISTRO&apos;
+                   WHEN LT_DESEMBARACO IS NOT NULL THEN &apos;DESEMBARAÇO&apos;
+                   WHEN LT_FATURAMENTO IS NOT NULL THEN &apos;FAURAMENTO&apos;
+                   WHEN LT_FECHAMENTO IS NOT NULL THEN &apos;FECHAMENTO&apos;
+                   WHEN LT_TOTAL IS NOT NULL THEN &apos;TOTAL&apos;
+                 END) ZTAB</sql><tempoAtualizacao>10</tempoAtualizacao><observacao/><componente><arquivo>WFD_197</arquivo><nome>LEAD TIME - PRAZO MÉDIO</nome></componente><colunas><coluna><nome>DESCR</nome><tipo>3</tipo><label>LT MÉDIO</label><hint/></coluna><coluna><nome>TOTAL_VALUE</nome><tipo>1</tipo><label>PERÍODO (DIAS)</label><hint/></coluna></colunas><parametros><parametro><nome>XPERIODO</nome><tipo>1</tipo><label>Período</label><fonteValores><lista>{&quot;0&quot;:&quot;&lt;&lt; INDIFERENTE &gt;&gt;&quot;,&quot;1&quot;:&quot;DIA ATUAL&quot;,&quot;2&quot;:&quot;SEMANA ATUAL&quot;,&quot;3&quot;:&quot;MÊS ATUAL&quot;,&quot;4&quot;:&quot;ANO ATUAL&quot;}</lista></fonteValores></parametro></parametros></fonteDados><ordem>4</ordem><largura>4</largura><altura>2</altura></widget><widget><codigo>WGS_245</codigo><nome>LEAD TIME - PRAZO MÉDIO (TRÂNSITO INTERNACIONAL)</nome><cliente>0</cliente><tipo>1</tipo><observacao/><tamFonte>3</tamFonte><colunas><coluna indice="1"><nome>LT_TRANSITO_INTER_DIA</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna><coluna indice="2"><nome>LT_TRANSITO_INTER_SEMANA</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna><coluna indice="3"><nome>LT_TRANSITO_INTER_MES</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna><coluna indice="4"><nome>LT_TRANSITO_INTER_ANO</nome><decimais>0</decimais><eixo>0</eixo><grupo/><alinhamento>2</alinhamento></coluna></colunas><parametros/><fonteDados><nome>LEAD TIME - PRAZO MÉDIO (TRÂNSITO INTERNACIONAL)</nome><sql>SELECT ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_EMBARQUE, &apos;DD/MM/RRRR&apos;),
+                                                TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_CHEGADA, &apos;DD/MM/RRRR&apos;),
+                                                0
+                                               )
+                                )
+                           )
+                  FROM PRC_CONHECIMENTO_TRASP,
+                       IMP_PROCESSO
+                 WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                   AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                   --
+                   AND PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                   AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+                   AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;DD/MM/YYYY&apos;) = TO_CHAR (SYSDATE, &apos;DD/MM/YYYY&apos;) ) ),
+              0
+             ) AS LT_TRANSITO_INTER_DIA,
+       ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_EMBARQUE, &apos;DD/MM/RRRR&apos;),
+                                                TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_CHEGADA, &apos;DD/MM/RRRR&apos;),
+                                                0
+                                               )
+                                )
+                           )
+                  FROM PRC_CONHECIMENTO_TRASP,
+                       IMP_PROCESSO
+                 WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                   AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                   --
+                   AND PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                   AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+                   AND (TO_CHAR (SYSDATE, &apos;WW/YYYY&apos;) = TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;WW/YYYY&apos;) ) ),
+              0
+             ) AS LT_TRANSITO_INTER_SEMANA,
+       ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_EMBARQUE, &apos;DD/MM/RRRR&apos;),
+                                                TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_CHEGADA, &apos;DD/MM/RRRR&apos;),
+                                                0
+                                               )
+                                )
+                           )
+                  FROM PRC_CONHECIMENTO_TRASP,
+                       IMP_PROCESSO
+                 WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                   AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                   --
+                   AND PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                   AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+                   AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;MM/YYYY&apos;) = TO_CHAR (SYSDATE, &apos;MM/YYYY&apos;) ) ),
+              0
+             ) AS LT_TRANSITO_INTER_MES,
+       ROUND ( (SELECT ABS (AVG (FCN_DIF_DATAS (TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_EMBARQUE, &apos;DD/MM/RRRR&apos;),
+                                                TO_DATE (PRC_CONHECIMENTO_TRASP.CNT_DTA_CHEGADA, &apos;DD/MM/RRRR&apos;),
+                                                0
+                                               )
+                                )
+                           )
+                  FROM PRC_CONHECIMENTO_TRASP,
+                       IMP_PROCESSO
+                 WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                   AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                   --
+                   AND PRC_CONHECIMENTO_TRASP.FIL_COD = IMP_PROCESSO.FIL_COD
+                   AND PRC_CONHECIMENTO_TRASP.PRI_COD = IMP_PROCESSO.PRI_COD
+                   AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;YYYY&apos;) = TO_CHAR (SYSDATE, &apos;YYYY&apos;) ) ),
+              0
+             ) AS LT_TRANSITO_INTER_ANO
+  FROM DUAL</sql><tempoAtualizacao>10</tempoAtualizacao><observacao/><componente><arquivo>WFD_203</arquivo><nome>LEAD TIME - PRAZO MÉDIO (TRÂNSITO INTERNACIONAL)</nome></componente><colunas><coluna><nome>LT_TRANSITO_INTER_DIA</nome><tipo>1</tipo><label>Dia atual</label><hint/></coluna><coluna><nome>LT_TRANSITO_INTER_SEMANA</nome><tipo>1</tipo><label>Semana atual</label><hint/></coluna><coluna><nome>LT_TRANSITO_INTER_MES</nome><tipo>1</tipo><label>Mes atual</label><hint/></coluna><coluna><nome>LT_TRANSITO_INTER_ANO</nome><tipo>1</tipo><label>Ano atual</label><hint/></coluna></colunas><parametros/></fonteDados><ordem>1</ordem><largura>2</largura><altura>2</altura></widget><widget><codigo>WGS_249</codigo><nome>LEAD TIME - PRAZO MÉDIO (FECHAMENTO)</nome><cliente>0</cliente><tipo>1</tipo><observacao/><tamFonte>3</tamFonte><colunas><coluna indice="1"><nome>LT_FECHAMENTO_DIA</nome><decimais/><eixo>0</eixo><grupo/><alinhamento>0</alinhamento></coluna><coluna indice="2"><nome>LT_FECHAMENTO_SEMANA</nome><decimais/><eixo>0</eixo><grupo/><alinhamento>0</alinhamento></coluna><coluna indice="3"><nome>LT_FECHAMENTO_MES</nome><decimais/><eixo>0</eixo><grupo/><alinhamento>0</alinhamento></coluna><coluna indice="4"><nome>LT_FECHAMENTO_ANO</nome><decimais/><eixo>0</eixo><grupo/><alinhamento>0</alinhamento></coluna></colunas><parametros/><fonteDados><nome>LEAD TIME - PRAZO MÉDIO (FECHAMENTO)</nome><sql>SELECT TO_NUMBER(DECODE (LT_FECHAMENTO_DIA, 0, NULL, LT_FECHAMENTO_DIA)) AS LT_FECHAMENTO_DIA,
+       TO_NUMBER(DECODE (LT_FECHAMENTO_SEMANA, 0, NULL, LT_FECHAMENTO_SEMANA)) AS LT_FECHAMENTO_SEMANA,
+       TO_NUMBER(DECODE (LT_FECHAMENTO_MES, 0, NULL, LT_FECHAMENTO_MES)) AS LT_FECHAMENTO_MES,
+       TO_NUMBER(DECODE (LT_FECHAMENTO_ANO, 0, NULL, LT_FECHAMENTO_ANO)) AS LT_FECHAMENTO_ANO
+  FROM (SELECT ROUND
+                 ( (SELECT ABS
+                             (AVG
+                                (FCN_DIF_DATAS
+                                             (TO_DATE (FIN_DOC.DOC_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                              TO_DATE (NVL ( (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                                FROM IMP_PROCESSO_FECHAMENTO
+                                                               WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 1),
+                                                            (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                               FROM IMP_PROCESSO_FECHAMENTO
+                                                              WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 2)
+                                                           ),
+                                                       &apos;DD/MM/RRRR&apos;
+                                                      ),
+                                              0
+                                             )
+                                )
+                             )
+                      FROM IMP_PROCESSO,
+                           FIN_DOC
+                     WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                       AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                       AND IMP_PROCESSO.FIL_COD = FIN_DOC.FIL_COD
+                       AND IMP_PROCESSO.PRI_COD = FIN_DOC.PRI_COD
+                       --
+                       AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                       AND FIN_DOC.DOC_TIP = 1
+                       --
+                       AND (    (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                 AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                 AND (FIN_DOC.DOC_VLD_NFEHOM = 0)                                        /*EM CADASTRO*/
+                                )
+                            OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                AND (FIN_DOC.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                AND (FIN_DOC.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                                  /*HOMOLOGAÇÃO*/
+                               )
+                            OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 1)
+                                AND (FIN_DOC.DOC_VLD_SITUACAO = 1)
+                                AND (FIN_DOC.DOC_VLD_CANCNFE = 0)                                         /*FINALIZADO*/
+                               )
+                           )
+                       AND FIN_DOC.DOC_DTA_EMISSAO =
+                             (SELECT MIN (A.DOC_DTA_EMISSAO)
+                                FROM FIN_DOC A
+                               WHERE A.FIL_COD = IMP_PROCESSO.FIL_COD
+                                 AND A.PRI_COD = IMP_PROCESSO.PRI_COD
+                                 AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                                 AND FIN_DOC.DOC_TIP = 1
+                                 --
+                                 AND (    (     (A.DOC_VLD_FINALIZADO = 0)
+                                           AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                           AND (A.DOC_VLD_NFEHOM = 0)                                    /*EM CADASTRO*/
+                                          )
+                                      OR (     (A.DOC_VLD_FINALIZADO = 0)
+                                          AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                          AND (A.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                          AND (A.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                              /*HOMOLOGAÇÃO*/
+                                         )
+                                      OR (     (A.DOC_VLD_FINALIZADO = 1)
+                                          AND (A.DOC_VLD_SITUACAO = 1)
+                                          AND (A.DOC_VLD_CANCNFE = 0)                                     /*FINALIZADO*/
+                                         )
+                                     ) )
+                       AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;DD/MM/YYYY&apos;) = TO_CHAR (SYSDATE, &apos;DD/MM/YYYY&apos;) ) ),
+                  0
+                 ) AS LT_FECHAMENTO_DIA,
+               ROUND
+                 ( (SELECT ABS
+                             (AVG
+                                (FCN_DIF_DATAS
+                                             (TO_DATE (FIN_DOC.DOC_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                              TO_DATE (NVL ( (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                                FROM IMP_PROCESSO_FECHAMENTO
+                                                               WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 1),
+                                                            (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                               FROM IMP_PROCESSO_FECHAMENTO
+                                                              WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 2)
+                                                           ),
+                                                       &apos;DD/MM/RRRR&apos;
+                                                      ),
+                                              0
+                                             )
+                                )
+                             )
+                      FROM IMP_PROCESSO,
+                           FIN_DOC
+                     WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                       AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                       AND IMP_PROCESSO.FIL_COD = FIN_DOC.FIL_COD
+                       AND IMP_PROCESSO.PRI_COD = FIN_DOC.PRI_COD
+                       --
+                       AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                       AND FIN_DOC.DOC_TIP = 1
+                       --
+                       AND (    (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                 AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                 AND (FIN_DOC.DOC_VLD_NFEHOM = 0)                                        /*EM CADASTRO*/
+                                )
+                            OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                AND (FIN_DOC.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                AND (FIN_DOC.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                                  /*HOMOLOGAÇÃO*/
+                               )
+                            OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 1)
+                                AND (FIN_DOC.DOC_VLD_SITUACAO = 1)
+                                AND (FIN_DOC.DOC_VLD_CANCNFE = 0)                                         /*FINALIZADO*/
+                               )
+                           )
+                       AND FIN_DOC.DOC_DTA_EMISSAO =
+                             (SELECT MIN (A.DOC_DTA_EMISSAO)
+                                FROM FIN_DOC A
+                               WHERE A.FIL_COD = IMP_PROCESSO.FIL_COD
+                                 AND A.PRI_COD = IMP_PROCESSO.PRI_COD
+                                 AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                                 AND FIN_DOC.DOC_TIP = 1
+                                 --
+                                 AND (    (     (A.DOC_VLD_FINALIZADO = 0)
+                                           AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                           AND (A.DOC_VLD_NFEHOM = 0)                                    /*EM CADASTRO*/
+                                          )
+                                      OR (     (A.DOC_VLD_FINALIZADO = 0)
+                                          AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                          AND (A.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                          AND (A.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                              /*HOMOLOGAÇÃO*/
+                                         )
+                                      OR (     (A.DOC_VLD_FINALIZADO = 1)
+                                          AND (A.DOC_VLD_SITUACAO = 1)
+                                          AND (A.DOC_VLD_CANCNFE = 0)                                     /*FINALIZADO*/
+                                         )
+                                     ) )
+                       AND (TO_CHAR (SYSDATE, &apos;WW/YYYY&apos;) = TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;WW/YYYY&apos;) ) ),
+                  0
+                 ) AS LT_FECHAMENTO_SEMANA,
+               ROUND
+                 ( (SELECT ABS
+                             (AVG
+                                (FCN_DIF_DATAS
+                                             (TO_DATE (FIN_DOC.DOC_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                              TO_DATE (NVL ( (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                                FROM IMP_PROCESSO_FECHAMENTO
+                                                               WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 1),
+                                                            (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                               FROM IMP_PROCESSO_FECHAMENTO
+                                                              WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 2)
+                                                           ),
+                                                       &apos;DD/MM/RRRR&apos;
+                                                      ),
+                                              0
+                                             )
+                                )
+                             )
+                      FROM IMP_PROCESSO,
+                           FIN_DOC
+                     WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                       AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                       AND IMP_PROCESSO.FIL_COD = FIN_DOC.FIL_COD
+                       AND IMP_PROCESSO.PRI_COD = FIN_DOC.PRI_COD
+                       --
+                       AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                       AND FIN_DOC.DOC_TIP = 1
+                       --
+                       AND (    (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                 AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                 AND (FIN_DOC.DOC_VLD_NFEHOM = 0)                                        /*EM CADASTRO*/
+                                )
+                            OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                AND (FIN_DOC.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                AND (FIN_DOC.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                                  /*HOMOLOGAÇÃO*/
+                               )
+                            OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 1)
+                                AND (FIN_DOC.DOC_VLD_SITUACAO = 1)
+                                AND (FIN_DOC.DOC_VLD_CANCNFE = 0)                                         /*FINALIZADO*/
+                               )
+                           )
+                       AND FIN_DOC.DOC_DTA_EMISSAO =
+                             (SELECT MIN (A.DOC_DTA_EMISSAO)
+                                FROM FIN_DOC A
+                               WHERE A.FIL_COD = IMP_PROCESSO.FIL_COD
+                                 AND A.PRI_COD = IMP_PROCESSO.PRI_COD
+                                 AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                                 AND FIN_DOC.DOC_TIP = 1
+                                 --
+                                 AND (    (     (A.DOC_VLD_FINALIZADO = 0)
+                                           AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                           AND (A.DOC_VLD_NFEHOM = 0)                                    /*EM CADASTRO*/
+                                          )
+                                      OR (     (A.DOC_VLD_FINALIZADO = 0)
+                                          AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                          AND (A.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                          AND (A.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                              /*HOMOLOGAÇÃO*/
+                                         )
+                                      OR (     (A.DOC_VLD_FINALIZADO = 1)
+                                          AND (A.DOC_VLD_SITUACAO = 1)
+                                          AND (A.DOC_VLD_CANCNFE = 0)                                     /*FINALIZADO*/
+                                         )
+                                     ) )
+                       AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;MM/YYYY&apos;) = TO_CHAR (SYSDATE, &apos;MM/YYYY&apos;) ) ),
+                  0
+                 ) AS LT_FECHAMENTO_MES,
+               ROUND
+                 ( (SELECT ABS
+                             (AVG
+                                (FCN_DIF_DATAS
+                                             (TO_DATE (FIN_DOC.DOC_DTA_EMISSAO, &apos;DD/MM/RRRR&apos;),
+                                              TO_DATE (NVL ( (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                                FROM IMP_PROCESSO_FECHAMENTO
+                                                               WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                 AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 1),
+                                                            (SELECT MAX (IMP_PROCESSO_FECHAMENTO.PFE_DTA_FECHAMENTO)
+                                                               FROM IMP_PROCESSO_FECHAMENTO
+                                                              WHERE IMP_PROCESSO_FECHAMENTO.FIL_COD =
+                                                                                                    IMP_PROCESSO.FIL_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PRI_COD =
+                                                                                                    IMP_PROCESSO.PRI_COD
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_STATUS = 1
+                                                                AND IMP_PROCESSO_FECHAMENTO.PFE_VLD_TIPO = 2)
+                                                           ),
+                                                       &apos;DD/MM/RRRR&apos;
+                                                      ),
+                                              0
+                                             )
+                                )
+                             )
+                      FROM IMP_PROCESSO,
+                           FIN_DOC
+                     WHERE IMP_PROCESSO.PRI_VLD_STATUS != 4
+                       AND IMP_PROCESSO.FIL_COD = :XFIL_COD
+                       AND IMP_PROCESSO.FIL_COD = FIN_DOC.FIL_COD
+                       AND IMP_PROCESSO.PRI_COD = FIN_DOC.PRI_COD
+                       --
+                       AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                       AND FIN_DOC.DOC_TIP = 1
+                       --
+                       AND (    (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                 AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                 AND (FIN_DOC.DOC_VLD_NFEHOM = 0)                                        /*EM CADASTRO*/
+                                )
+                            OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 0)
+                                AND (FIN_DOC.DOC_VLD_CANCELAMENTO = 0)
+                                AND (FIN_DOC.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                AND (FIN_DOC.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                                  /*HOMOLOGAÇÃO*/
+                               )
+                            OR (     (FIN_DOC.DOC_VLD_FINALIZADO = 1)
+                                AND (FIN_DOC.DOC_VLD_SITUACAO = 1)
+                                AND (FIN_DOC.DOC_VLD_CANCNFE = 0)                                         /*FINALIZADO*/
+                               )
+                           )
+                       AND FIN_DOC.DOC_DTA_EMISSAO =
+                             (SELECT MIN (A.DOC_DTA_EMISSAO)
+                                FROM FIN_DOC A
+                               WHERE A.FIL_COD = IMP_PROCESSO.FIL_COD
+                                 AND A.PRI_COD = IMP_PROCESSO.PRI_COD
+                                 AND FIN_DOC.DOC_VLD_TIPO IN (0, 1, 3, 5)
+                                 AND FIN_DOC.DOC_TIP = 1
+                                 --
+                                 AND (    (     (A.DOC_VLD_FINALIZADO = 0)
+                                           AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                           AND (A.DOC_VLD_NFEHOM = 0)                                    /*EM CADASTRO*/
+                                          )
+                                      OR (     (A.DOC_VLD_FINALIZADO = 0)
+                                          AND (A.DOC_VLD_CANCELAMENTO = 0)
+                                          AND (A.DOC_VLD_NFEHOM &lt;&gt; 0)
+                                          AND (A.DOC_VLD_CANCELAMENTO &lt;&gt; 1)                              /*HOMOLOGAÇÃO*/
+                                         )
+                                      OR (     (A.DOC_VLD_FINALIZADO = 1)
+                                          AND (A.DOC_VLD_SITUACAO = 1)
+                                          AND (A.DOC_VLD_CANCNFE = 0)                                     /*FINALIZADO*/
+                                         )
+                                     ) )
+                       AND (TO_CHAR (IMP_PROCESSO.PRI_DTA_ABERTURA, &apos;YYYY&apos;) = TO_CHAR (SYSDATE, &apos;YYYY&apos;) ) ),
+                  0
+                 ) AS LT_FECHAMENTO_ANO
+          FROM DUAL) XTAB</sql><tempoAtualizacao>10</tempoAtualizacao><observacao/><componente><arquivo>WFD_207</arquivo><nome>LEAD TIME - PRAZO MÉDIO (FECHAMENTO)</nome></componente><colunas><coluna><nome>LT_FECHAMENTO_DIA</nome><tipo>1</tipo><label>Dia atual</label><hint/></coluna><coluna><nome>LT_FECHAMENTO_SEMANA</nome><tipo>1</tipo><label>Semana atual</label><hint/></coluna><coluna><nome>LT_FECHAMENTO_MES</nome><tipo>1</tipo><label>Mes atual</label><hint/></coluna><coluna><nome>LT_FECHAMENTO_ANO</nome><tipo>1</tipo><label>Ano atual</label><hint/></coluna></colunas><parametros/></fonteDados><ordem>6</ordem><largura>2</largura><altura>2</altura></widget></widgets></dashboard>
